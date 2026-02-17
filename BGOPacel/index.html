@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcel Step 1</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#0b3c6d;
+  --secondary:#1e88e5;
+  --bg:#f4f7fb;
+  --card:#ffffff;
+  --muted:#6b7280;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:'Prompt',sans-serif;
+  background:var(--bg);
+  color:#111;
+}
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:22px 16px 28px;
+  border-bottom-left-radius:22px;
+  border-bottom-right-radius:22px;
+}
+h1{margin:0;font-size:18px}
+p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
+.card{
+  background:var(--card);
+  margin:16px;
+  padding:16px;
+  border-radius:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+.map{
+  width:100%;
+  height:280px;
+  border-radius:16px;
+  overflow:hidden;
+  margin-top:10px;
+  background:#e5e7eb;
+  border:2px solid transparent;
+}
+.map.fullscreen{
+  position:fixed;
+  inset:0;
+  margin:0;
+  height:100dvh;
+  width:100dvw;
+  border-radius:0;
+  z-index:999;
+}
+.map-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  opacity:0;
+  pointer-events:none;
+  z-index:998;
+  transition:opacity .2s ease;
+}
+.map-backdrop.show{
+  opacity:1;
+  pointer-events:auto;
+}
+.map-toolbar{
+  position:fixed;
+  top:10px;
+  left:10px;
+  right:10px;
+  z-index:1000;
+  display:none;
+  gap:8px;
+}
+.map-toolbar.show{
+  display:flex;
+}
+.map-toolbar input{
+  flex:1;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  padding:12px;
+  font-family:'Prompt',sans-serif;
+}
+.map-hint{
+  position:fixed;
+  bottom:16px;
+  left:16px;
+  right:16px;
+  z-index:1000;
+  display:none;
+}
+.map-hint.show{
+  display:block;
+}
+.map-hint .btn{
+  width:100%;
+}
+@media (max-width: 600px){
+  .map{height:340px;}
+  .btn{font-size:16px;padding:16px;}
+  input,select,textarea{font-size:16px;}
+}
+.map.active-pickup{
+  border-color:#0b3c6d;
+}
+.map.active-dropoff{
+  border-color:#1e88e5;
+}
+body.map-open{
+  overflow:hidden;
+}
+label{font-size:13px;color:#374151;margin-top:12px;display:block}
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  font-family:'Prompt',sans-serif;
+}
+.section-title{
+  font-weight:600;
+  margin-bottom:6px;
+}
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:14px 16px;
+  background:#fff;
+  border-top:1px solid #e5e7eb;
+}
+.btn-row{
+  display:flex;
+  gap:10px;
+}
+.btn{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:500;
+  border:none;
+  width:100%;
+  cursor:pointer;
+  font-size:15px;
+  font-family:'Prompt',sans-serif;
+}
+.btn.secondary{
+  background:#eef2f7;
+  color:#0b3c6d;
+}
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:6px;
+  font-size:14px;
+}
+</style>
+
+</head>
+<body>
+<header>
+<h1>เลือกจุดรับ - ส่งพัสดุ</h1>
+<p class="sub">ปักหมุดให้เรียบร้อยก่อนดำเนินการต่อ</p>
+</header>
+<div class="card">
+<label>📍 จุดรับพัสดุ</label>
+<button id="pickupBtn" class="btn secondary" type="button">ค้นหาที่อยู่บนแผนที่</button>
+<div class="summary-row"><span>ที่อยู่ผู้ส่ง</span><span id="pickupText">-</span></div>
+<label>🏁 จุดส่งพัสดุ</label>
+<button id="dropoffBtn" class="btn secondary" type="button">ค้นหาที่อยู่บนแผนที่</button>
+<div class="summary-row"><span>ที่อยู่ผู้รับ</span><span id="dropoffText">-</span></div>
+</div>
+<div class="card">
+  <div class="section-title">แผนที่</div>
+  <div class="summary-row"><span>เลือกจากแผนที่</span><span id="activeHint">แตะช่องผู้ส่งหรือผู้รับ</span></div>
+  <div class="map" id="map"></div>
+  <div class="summary-row"><span>ระยะทางประมาณ</span><span id="distanceText">-</span></div>
+  <div class="summary-row"><span>ราคาประมาณ</span><span id="priceText">-</span></div>
+</div>
+<div class="footer">
+<div class="btn-row">
+  <button id="nextBtn" class="btn" type="button">ถัดไป</button>
+</div>
+</div>
+<div id="mapBackdrop" class="map-backdrop"></div>
+<div id="mapToolbar" class="map-toolbar">
+  <input id="mapSearch" placeholder="ค้นหาที่อยู่">
+  <button id="closeMap" class="btn secondary" type="button">ปิด</button>
+</div>
+<div id="mapHint" class="map-hint">
+  <button id="confirmPoint" class="btn" type="button">ยืนยันจุดนี้</button>
+</div>
+<script>
+const pickupBtn = document.getElementById('pickupBtn');
+const dropoffBtn = document.getElementById('dropoffBtn');
+const pickupText = document.getElementById('pickupText');
+const dropoffText = document.getElementById('dropoffText');
+const nextBtn = document.getElementById('nextBtn');
+const distanceText = document.getElementById('distanceText');
+const priceText = document.getElementById('priceText');
+const mapEl = document.getElementById('map');
+const activeHint = document.getElementById('activeHint');
+const mapBackdrop = document.getElementById('mapBackdrop');
+const mapToolbar = document.getElementById('mapToolbar');
+const mapSearch = document.getElementById('mapSearch');
+const closeMapBtn = document.getElementById('closeMap');
+const mapHint = document.getElementById('mapHint');
+const confirmPoint = document.getElementById('confirmPoint');
+
+let map;
+let geocoder;
+let pickupMarker;
+let dropoffMarker;
+let directionsService;
+let directionsRenderer;
+let activeField = 'pickup';
+let distanceKm = null;
+let priceEstimate = null;
+
+const PRICE_BASE = 30;
+const PRICE_PER_KM = 8;
+
+function updateEstimate(){
+  if(distanceKm === null){
+    distanceText.textContent = '-';
+    priceText.textContent = '-';
+    return;
+  }
+  distanceText.textContent = `${distanceKm.toFixed(1)} กม.`;
+  priceEstimate = Math.round(PRICE_BASE + (distanceKm * PRICE_PER_KM));
+  priceText.textContent = `${priceEstimate.toLocaleString('th-TH')} บาท`;
+}
+
+function updateStorage(){
+  const payload = {
+    pickupAddress: pickupText.textContent === '-' ? '' : pickupText.textContent,
+    dropoffAddress: dropoffText.textContent === '-' ? '' : dropoffText.textContent,
+    pickupLat: pickupMarker ? pickupMarker.getPosition().lat() : null,
+    pickupLng: pickupMarker ? pickupMarker.getPosition().lng() : null,
+    dropoffLat: dropoffMarker ? dropoffMarker.getPosition().lat() : null,
+    dropoffLng: dropoffMarker ? dropoffMarker.getPosition().lng() : null,
+    distanceKm,
+    priceEstimate
+  };
+  localStorage.setItem('parcel_step1', JSON.stringify(payload));
+}
+
+function calcRoute(){
+  if(!pickupMarker || !dropoffMarker){
+    distanceKm = null;
+    updateEstimate();
+    updateStorage();
+    return;
+  }
+  directionsService.route({
+    origin: pickupMarker.getPosition(),
+    destination: dropoffMarker.getPosition(),
+    travelMode: google.maps.TravelMode.DRIVING
+  }, (result, status) => {
+    if(status !== 'OK' || !result.routes || !result.routes[0]){
+      distanceKm = null;
+      updateEstimate();
+      updateStorage();
+      return;
+    }
+    directionsRenderer.setDirections(result);
+    const leg = result.routes[0].legs[0];
+    distanceKm = leg.distance.value / 1000;
+    updateEstimate();
+    updateStorage();
+  });
+}
+
+function setMarker(position, type){
+  if(type === 'pickup'){
+    if(!pickupMarker){
+      pickupMarker = new google.maps.Marker({map, position, label:'A', draggable:true});
+      pickupMarker.addListener('dragend', () => {
+        const pos = pickupMarker.getPosition();
+        reverseGeocode(pos, (address) => {
+          pickupText.textContent = address;
+          syncButton();
+          updateStorage();
+          calcRoute();
+        });
+      });
+    }else{
+      pickupMarker.setPosition(position);
+    }
+  }else{
+    if(!dropoffMarker){
+      dropoffMarker = new google.maps.Marker({map, position, label:'B', draggable:true});
+      dropoffMarker.addListener('dragend', () => {
+        const pos = dropoffMarker.getPosition();
+        reverseGeocode(pos, (address) => {
+          dropoffText.textContent = address;
+          syncButton();
+          updateStorage();
+          calcRoute();
+        });
+      });
+    }else{
+      dropoffMarker.setPosition(position);
+    }
+  }
+  map.panTo(position);
+  calcRoute();
+}
+
+function setActiveField(type){
+  activeField = type;
+  if(type === 'pickup'){
+    mapEl.classList.add('active-pickup');
+    mapEl.classList.remove('active-dropoff');
+    activeHint.textContent = 'กำลังเลือกจุดรับพัสดุ';
+    confirmPoint.textContent = 'ยืนยันจุดรับพัสดุ';
+  }else{
+    mapEl.classList.add('active-dropoff');
+    mapEl.classList.remove('active-pickup');
+    activeHint.textContent = 'กำลังเลือกจุดส่งพัสดุ';
+    confirmPoint.textContent = 'ยืนยันจุดส่งพัสดุ';
+  }
+}
+
+function fitBoundsIfReady(){
+  if(pickupMarker && dropoffMarker){
+    const bounds = new google.maps.LatLngBounds();
+    bounds.extend(pickupMarker.getPosition());
+    bounds.extend(dropoffMarker.getPosition());
+    map.fitBounds(bounds, 40);
+  }
+}
+
+function reverseGeocode(latLng, cb){
+  geocoder.geocode({location: latLng}, (results, status) => {
+    if(status === 'OK' && results && results[0]){
+      cb(results[0].formatted_address);
+      return;
+    }
+    cb('ไม่พบที่อยู่');
+  });
+}
+
+window.initMap = function initMap(){
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 6.555, lng: 101.09},
+    zoom: 13,
+    disableDefaultUI: true,
+    zoomControl: true
+  });
+  geocoder = new google.maps.Geocoder();
+  directionsService = new google.maps.DirectionsService();
+  directionsRenderer = new google.maps.DirectionsRenderer({
+    map,
+    suppressMarkers: true,
+    preserveViewport: true
+  });
+
+  const searchAuto = new google.maps.places.Autocomplete(mapSearch);
+  searchAuto.bindTo('bounds', map);
+  searchAuto.addListener('place_changed', () => {
+    const place = searchAuto.getPlace();
+    if(!place.geometry) return;
+    const target = activeField || 'pickup';
+    setMarker(place.geometry.location, target);
+    if(target === 'pickup') pickupText.textContent = place.formatted_address || pickupText.textContent;
+    if(target === 'dropoff') dropoffText.textContent = place.formatted_address || dropoffText.textContent;
+    syncButton();
+    updateStorage();
+    fitBoundsIfReady();
+  });
+
+  map.addListener('click', (e) => {
+    const target = activeField || (!pickupMarker ? 'pickup' : 'dropoff');
+    setMarker(e.latLng, target);
+    reverseGeocode(e.latLng, (address) => {
+      if(target === 'pickup') pickupText.textContent = address;
+      if(target === 'dropoff') dropoffText.textContent = address;
+      syncButton();
+      updateStorage();
+      fitBoundsIfReady();
+    });
+  });
+
+  // preload if exists
+  try{
+    const saved = JSON.parse(localStorage.getItem('parcel_step1') || '{}');
+    if(saved.pickupAddress) pickupText.textContent = saved.pickupAddress;
+    if(saved.dropoffAddress) dropoffText.textContent = saved.dropoffAddress;
+    if(saved.pickupLat && saved.pickupLng){
+      setMarker(new google.maps.LatLng(saved.pickupLat, saved.pickupLng), 'pickup');
+    }
+    if(saved.dropoffLat && saved.dropoffLng){
+      setMarker(new google.maps.LatLng(saved.dropoffLat, saved.dropoffLng), 'dropoff');
+    }
+    if(saved.pickupLat && saved.pickupLng && saved.dropoffLat && saved.dropoffLng){
+      fitBoundsIfReady();
+    }
+  }catch(e){}
+
+  // default start point: user's current location (fallback to Betong clock tower)
+  if((pickupText.textContent === '-' || !pickupText.textContent.trim()) && !pickupMarker){
+    if(navigator.geolocation){
+      navigator.geolocation.getCurrentPosition(
+        (pos) => {
+          const loc = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+          map.setCenter(loc);
+          setActiveField('pickup');
+          setMarker(loc, 'pickup');
+          reverseGeocode(loc, (address) => {
+            pickupText.textContent = address;
+            updateStorage();
+            syncButton();
+          });
+        },
+        () => {
+          geocoder.geocode({address:'หอนาฬิกาเทศบาลเมืองเบตง'}, (results, status) => {
+            if(status === 'OK' && results && results[0]){
+              const loc = results[0].geometry.location;
+              map.setCenter(loc);
+              setActiveField('pickup');
+              setMarker(loc, 'pickup');
+              pickupText.textContent = results[0].formatted_address || pickupText.textContent;
+              updateStorage();
+              syncButton();
+            }
+          });
+        },
+        {enableHighAccuracy:true, timeout:8000, maximumAge:60000}
+      );
+    }
+  }
+
+  if((dropoffText.textContent === '-' || !dropoffText.textContent.trim()) && !dropoffMarker){
+    geocoder.geocode({address:'หอนาฬิกาเทศบาลเมืองเบตง'}, (results, status) => {
+      if(status === 'OK' && results && results[0]){
+        const loc = results[0].geometry.location;
+        setActiveField('dropoff');
+        setMarker(loc, 'dropoff');
+        dropoffText.textContent = results[0].formatted_address || dropoffText.textContent;
+        updateStorage();
+        syncButton();
+      }
+    });
+  }
+
+  syncButton();
+};
+
+function syncButton(){
+  const ok = pickupText.textContent.trim() !== '-' && dropoffText.textContent.trim() !== '-';
+  nextBtn.disabled = !ok;
+}
+
+nextBtn.addEventListener('click', () => {
+  const pickup = pickupText.textContent.trim();
+  const dropoff = dropoffText.textContent.trim();
+  if(!pickup || !dropoff){
+    syncButton();
+    return;
+  }
+  updateStorage();
+  window.location.href = 'indexpacel2.html';
+});
+
+function openMap(type){
+  setActiveField(type);
+  document.body.classList.add('map-open');
+  mapBackdrop.classList.add('show');
+  mapEl.classList.add('fullscreen');
+  mapToolbar.classList.add('show');
+  mapHint.classList.add('show');
+  mapSearch.value = '';
+  setTimeout(() => {
+    google.maps.event.trigger(map, 'resize');
+    if(type === 'pickup' && pickupMarker) map.panTo(pickupMarker.getPosition());
+    if(type === 'dropoff' && dropoffMarker) map.panTo(dropoffMarker.getPosition());
+  }, 50);
+}
+
+function closeMap(){
+  document.body.classList.remove('map-open');
+  mapBackdrop.classList.remove('show');
+  mapEl.classList.remove('fullscreen');
+  mapToolbar.classList.remove('show');
+  mapHint.classList.remove('show');
+}
+
+pickupBtn.addEventListener('click', () => openMap('pickup'));
+dropoffBtn.addEventListener('click', () => openMap('dropoff'));
+mapBackdrop.addEventListener('click', closeMap);
+closeMapBtn.addEventListener('click', closeMap);
+confirmPoint.addEventListener('click', closeMap);
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4eIoOargBmLJWifYrlTcSklmi7IqtyA8&libraries=places&callback=initMap"></script>
+</body>
+</html>
