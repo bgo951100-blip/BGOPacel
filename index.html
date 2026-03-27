@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -36,28 +36,40 @@ p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
 body.map-open{overflow:hidden}
 label{font-size:13px;color:#374151;margin-top:12px;display:block}
 input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:1px solid #d1d5db;font-family:'Prompt',sans-serif}
+textarea{resize:vertical;min-height:84px}
 .section-title{font-weight:600;margin-bottom:6px}
 .footer{position:fixed;bottom:0;left:0;right:0;padding:14px 16px;background:#fff;border-top:1px solid #e5e7eb}
 .btn-row{display:flex;gap:10px}
 .btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px;border-radius:14px;text-align:center;font-weight:500;border:none;width:100%;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif}
 .btn.secondary{background:#eef2f7;color:#0b3c6d}
 .btn:disabled{opacity:.6;cursor:not-allowed}
-.summary-row{display:flex;justify-content:space-between;margin-top:6px;font-size:14px;gap:12px}
-.summary-row span:last-child{text-align:right;word-break:break-word;max-width:58%}
+.summary-row{display:flex;justify-content:space-between;margin-top:6px;font-size:14px;gap:12px}.summary-row span:last-child{text-align:right;word-break:break-word;max-width:58%}
+.location-block{padding:14px;border:1px solid #e5e7eb;border-radius:16px;background:#fbfdff}.location-block + .location-block{margin-top:14px}
 </style>
 </head>
 <body>
 <header>
 <h1>เลือกจุดรับและจุดส่งพัสดุ</h1>
-<p class="sub">ปักหมุดให้เรียบร้อยก่อนดำเนินการต่อ</p>
+<p class="sub">ปักหมุดและระบุรายละเอียดที่อยู่ให้ครบก่อนดำเนินการต่อ</p>
 </header>
 <div class="card">
-<label>จุดรับพัสดุ</label>
-<button id="pickupBtn" class="btn secondary" type="button">ค้นหาตำแหน่งบนแผนที่</button>
-<div class="summary-row"><span>ที่อยู่ผู้ส่ง</span><span id="pickupText">-</span></div>
-<label>จุดส่งพัสดุ</label>
-<button id="dropoffBtn" class="btn secondary" type="button">ค้นหาตำแหน่งบนแผนที่</button>
-<div class="summary-row"><span>ที่อยู่ผู้รับ</span><span id="dropoffText">-</span></div>
+  <div class="location-block">
+    <label>จุดรับพัสดุ</label>
+    <input id="pickupSearchField" placeholder="พิมพ์ค้นหาสถานที่หรือที่อยู่จุดรับ">
+    <button id="pickupBtn" class="btn secondary" type="button">ค้นหาตำแหน่งบนแผนที่</button>
+    <div class="summary-row"><span>ที่อยู่ผู้ส่ง</span><span id="pickupText">-</span></div>
+    <label for="pickupNote">หมายเหตุที่อยู่จุดรับ</label>
+    <textarea id="pickupNote" placeholder="เช่น บ้านหลังมุมซอย, ตรงข้ามร้านยา, โทรก่อนถึง"></textarea>
+  </div>
+
+  <div class="location-block">
+    <label>จุดส่งพัสดุ</label>
+    <input id="dropoffSearchField" placeholder="พิมพ์ค้นหาสถานที่หรือที่อยู่จุดส่ง">
+    <button id="dropoffBtn" class="btn secondary" type="button">ค้นหาตำแหน่งบนแผนที่</button>
+    <div class="summary-row"><span>ที่อยู่ผู้รับ</span><span id="dropoffText">-</span></div>
+    <label for="dropoffNote">หมายเหตุที่อยู่จุดส่ง</label>
+    <textarea id="dropoffNote" placeholder="เช่น ฝากไว้กับ รปภ., ห้องมุมซ้าย, โทรก่อนเข้าหมู่บ้าน"></textarea>
+  </div>
 </div>
 <div class="card">
   <div class="section-title">แผนที่</div>
@@ -73,7 +85,7 @@ input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;
 </div>
 <div id="mapBackdrop" class="map-backdrop"></div>
 <div id="mapToolbar" class="map-toolbar">
-  <input id="mapSearch" placeholder="ค้นหาสถานที่หรือที่อยู่">
+  <input id="mapSearch" placeholder="ค้นหาสถานที่หรือที่อยู่บนแผนที่">
   <button id="closeMap" class="btn secondary" type="button">ปิด</button>
 </div>
 <div id="mapHint" class="map-hint">
@@ -84,6 +96,10 @@ const pickupBtn = document.getElementById('pickupBtn');
 const dropoffBtn = document.getElementById('dropoffBtn');
 const pickupText = document.getElementById('pickupText');
 const dropoffText = document.getElementById('dropoffText');
+const pickupSearchField = document.getElementById('pickupSearchField');
+const dropoffSearchField = document.getElementById('dropoffSearchField');
+const pickupNote = document.getElementById('pickupNote');
+const dropoffNote = document.getElementById('dropoffNote');
 const nextBtn = document.getElementById('nextBtn');
 const distanceText = document.getElementById('distanceText');
 const priceText = document.getElementById('priceText');
@@ -126,6 +142,8 @@ function updateStorage(){
   const payload = {
     pickupAddress: pickupText.textContent === '-' ? '' : pickupText.textContent,
     dropoffAddress: dropoffText.textContent === '-' ? '' : dropoffText.textContent,
+    pickupNote: pickupNote.value.trim(),
+    dropoffNote: dropoffNote.value.trim(),
     pickupLat: pickupMarker ? pickupMarker.getPosition().lat() : null,
     pickupLng: pickupMarker ? pickupMarker.getPosition().lng() : null,
     dropoffLat: dropoffMarker ? dropoffMarker.getPosition().lat() : null,
@@ -170,6 +188,7 @@ function setMarker(position, type){
         const pos = pickupMarker.getPosition();
         reverseGeocode(pos, (address) => {
           pickupText.textContent = address;
+          pickupSearchField.value = address;
           syncButton();
           updateStorage();
           calcRoute();
@@ -185,6 +204,7 @@ function setMarker(position, type){
         const pos = dropoffMarker.getPosition();
         reverseGeocode(pos, (address) => {
           dropoffText.textContent = address;
+          dropoffSearchField.value = address;
           syncButton();
           updateStorage();
           calcRoute();
@@ -232,6 +252,30 @@ function reverseGeocode(latLng, cb){
   });
 }
 
+function bindAutocomplete(input, type){
+  const autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+  autocomplete.addListener('place_changed', () => {
+    const place = autocomplete.getPlace();
+    if(!place.geometry){
+      return;
+    }
+    setActiveField(type);
+    setMarker(place.geometry.location, type);
+    const address = place.formatted_address || input.value.trim();
+    if(type === 'pickup'){
+      pickupText.textContent = address;
+      pickupSearchField.value = address;
+    } else {
+      dropoffText.textContent = address;
+      dropoffSearchField.value = address;
+    }
+    syncButton();
+    updateStorage();
+    fitBoundsIfReady();
+  });
+}
+
 window.initMap = function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
     center: DEFAULT_CENTER,
@@ -250,29 +294,55 @@ window.initMap = function initMap(){
     if(!place.geometry) return;
     const target = activeField || 'pickup';
     setMarker(place.geometry.location, target);
-    if(target === 'pickup') pickupText.textContent = place.formatted_address || pickupText.textContent;
-    if(target === 'dropoff') dropoffText.textContent = place.formatted_address || dropoffText.textContent;
+    if(target === 'pickup') {
+      pickupText.textContent = place.formatted_address || pickupText.textContent;
+      pickupSearchField.value = pickupText.textContent;
+    }
+    if(target === 'dropoff') {
+      dropoffText.textContent = place.formatted_address || dropoffText.textContent;
+      dropoffSearchField.value = dropoffText.textContent;
+    }
     syncButton();
     updateStorage();
     fitBoundsIfReady();
   });
 
+  bindAutocomplete(pickupSearchField, 'pickup');
+  bindAutocomplete(dropoffSearchField, 'dropoff');
+
   map.addListener('click', (e) => {
     const target = activeField || (!pickupMarker ? 'pickup' : 'dropoff');
     setMarker(e.latLng, target);
     reverseGeocode(e.latLng, (address) => {
-      if(target === 'pickup') pickupText.textContent = address;
-      if(target === 'dropoff') dropoffText.textContent = address;
+      if(target === 'pickup') {
+        pickupText.textContent = address;
+        pickupSearchField.value = address;
+      }
+      if(target === 'dropoff') {
+        dropoffText.textContent = address;
+        dropoffSearchField.value = address;
+      }
       syncButton();
       updateStorage();
       fitBoundsIfReady();
     });
   });
 
+  pickupNote.addEventListener('input', updateStorage);
+  dropoffNote.addEventListener('input', updateStorage);
+
   try{
     const saved = JSON.parse(localStorage.getItem('parcel_step1') || '{}');
-    if(saved.pickupAddress) pickupText.textContent = saved.pickupAddress;
-    if(saved.dropoffAddress) dropoffText.textContent = saved.dropoffAddress;
+    if(saved.pickupAddress) {
+      pickupText.textContent = saved.pickupAddress;
+      pickupSearchField.value = saved.pickupAddress;
+    }
+    if(saved.dropoffAddress) {
+      dropoffText.textContent = saved.dropoffAddress;
+      dropoffSearchField.value = saved.dropoffAddress;
+    }
+    if(saved.pickupNote) pickupNote.value = saved.pickupNote;
+    if(saved.dropoffNote) dropoffNote.value = saved.dropoffNote;
     if(saved.pickupLat && saved.pickupLng){
       setMarker(new google.maps.LatLng(saved.pickupLat, saved.pickupLng), 'pickup');
     }
@@ -294,6 +364,7 @@ window.initMap = function initMap(){
           setMarker(loc, 'pickup');
           reverseGeocode(loc, (address) => {
             pickupText.textContent = address;
+            pickupSearchField.value = address;
             updateStorage();
             syncButton();
           });
@@ -306,6 +377,7 @@ window.initMap = function initMap(){
               setActiveField('pickup');
               setMarker(loc, 'pickup');
               pickupText.textContent = results[0].formatted_address || pickupText.textContent;
+              pickupSearchField.value = pickupText.textContent;
               updateStorage();
               syncButton();
             }
@@ -323,6 +395,7 @@ window.initMap = function initMap(){
         setActiveField('dropoff');
         setMarker(loc, 'dropoff');
         dropoffText.textContent = results[0].formatted_address || dropoffText.textContent;
+        dropoffSearchField.value = dropoffText.textContent;
         updateStorage();
         syncButton();
       }
@@ -355,7 +428,7 @@ function openMap(type){
   mapEl.classList.add('fullscreen');
   mapToolbar.classList.add('show');
   mapHint.classList.add('show');
-  mapSearch.value = '';
+  mapSearch.value = type === 'pickup' ? pickupSearchField.value : dropoffSearchField.value;
   setTimeout(() => {
     google.maps.event.trigger(map, 'resize');
     if(type === 'pickup' && pickupMarker) map.panTo(pickupMarker.getPosition());
@@ -373,6 +446,8 @@ function closeMap(){
 
 pickupBtn.addEventListener('click', () => openMap('pickup'));
 dropoffBtn.addEventListener('click', () => openMap('dropoff'));
+pickupSearchField.addEventListener('focus', () => setActiveField('pickup'));
+dropoffSearchField.addEventListener('focus', () => setActiveField('dropoff'));
 mapBackdrop.addEventListener('click', closeMap);
 closeMapBtn.addEventListener('click', closeMap);
 confirmPoint.addEventListener('click', closeMap);

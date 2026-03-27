@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ส่งพัสดุ - สรุปและชำระเงิน</title>
+<title>เธชเนเธเธเธฑเธชเธ”เธธ - เธชเธฃเธธเธเนเธฅเธฐเธเธณเธฃเธฐเน€เธเธดเธ</title>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--primary:#0b3c6d;--secondary:#1e88e5;--bg:#f4f7fb;--card:#ffffff}
@@ -21,44 +21,44 @@ input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;
 </head>
 <body>
 <header>
-<h1>สรุปและชำระเงิน</h1>
-<p class="sub">ตรวจสอบข้อมูลก่อนยืนยัน</p>
+<h1>เธชเธฃเธธเธเนเธฅเธฐเธเธณเธฃเธฐเน€เธเธดเธ</h1>
+<p class="sub">เธ•เธฃเธงเธเธชเธญเธเธเนเธญเธกเธนเธฅเธเนเธญเธเธขเธทเธเธขเธฑเธ</p>
 </header>
 
 <div class="card">
-<div class="section-title">สรุปรายการ</div>
-<div class="summary-row"><span>ที่อยู่ผู้ส่ง</span><span id="sumSenderAddress">...</span></div>
-<div class="summary-row"><span>ที่อยู่ผู้รับ</span><span id="sumReceiverAddress">...</span></div>
-<div class="summary-row"><span>ประเภทพัสดุ</span><span id="sumParcelType">...</span></div>
-<div class="summary-row"><span>น้ำหนัก</span><span id="sumParcelWeight">...</span></div>
-<div class="summary-row"><span>ระยะทางประมาณ</span><span id="sumDistance">...</span></div>
+<div class="section-title">เธชเธฃเธธเธเธฃเธฒเธขเธเธฒเธฃ</div>
+<div class="summary-row"><span>เธ—เธตเนเธญเธขเธนเนเธเธนเนเธชเนเธ</span><span id="sumSenderAddress">...</span></div>
+<div class="summary-row"><span>เธ—เธตเนเธญเธขเธนเนเธเธนเนเธฃเธฑเธ</span><span id="sumReceiverAddress">...</span></div>
+<div class="summary-row"><span>เธเธฃเธฐเน€เธ เธ—เธเธฑเธชเธ”เธธ</span><span id="sumParcelType">...</span></div>
+<div class="summary-row"><span>เธเนเธณเธซเธเธฑเธ</span><span id="sumParcelWeight">...</span></div>
+<div class="summary-row"><span>เธฃเธฐเธขเธฐเธ—เธฒเธเธเธฃเธฐเธกเธฒเธ“</span><span id="sumDistance">...</span></div>
 </div>
 
 <div class="card">
-<div class="section-title">การชำระเงิน</div>
-<label>เลือกวิธีการชำระเงิน</label>
+<div class="section-title">เธเธฒเธฃเธเธณเธฃเธฐเน€เธเธดเธ</div>
+<label>เน€เธฅเธทเธญเธเธงเธดเธเธตเธเธฒเธฃเธเธณเธฃเธฐเน€เธเธดเธ</label>
 <select id="paymentMethod">
-<option value="cash">เงินสด</option>
-<option value="transfer">โอน</option>
+<option value="cash">เน€เธเธดเธเธชเธ”</option>
+<option value="transfer">เนเธญเธ</option>
 </select>
-<label>ผู้ชำระเงิน</label>
+<label>เธเธนเนเธเธณเธฃเธฐเน€เธเธดเธ</label>
 <select id="payer">
-<option value="sender">ผู้ส่ง</option>
-<option value="receiver">ผู้รับ (เงินสดเท่านั้น)</option>
+<option value="sender">เธเธนเนเธชเนเธ</option>
+<option value="receiver">เธเธนเนเธฃเธฑเธ (เน€เธเธดเธเธชเธ”เน€เธ—เนเธฒเธเธฑเนเธ)</option>
 </select>
-<label>รหัสโปรโมชัน</label>
-<input id="promoCode" placeholder="ถ้ามี">
+<label>เธฃเธซเธฑเธชเนเธเธฃเนเธกเธเธฑเธ</label>
+<input id="promoCode" placeholder="เธ–เนเธฒเธกเธต">
 </div>
 
 <div class="card">
-<div class="section-title">สรุปราคา</div>
-<div class="summary-row"><span>ค่าจัดส่ง</span><span id="sumPrice">คำนวณจากระบบ</span></div>
+<div class="section-title">เธชเธฃเธธเธเธฃเธฒเธเธฒ</div>
+<div class="summary-row"><span>เธเนเธฒเธเธฑเธ”เธชเนเธ</span><span id="sumPrice">เธเธณเธเธงเธ“เธเธฒเธเธฃเธฐเธเธ</span></div>
 </div>
 
 <div class="footer">
 <div class="btn-row">
-  <button id="backBtn" class="btn secondary" type="button">ย้อนกลับ</button>
-  <button id="confirmBtn" class="btn" type="button">ยืนยันการสั่งส่ง</button>
+  <button id="backBtn" class="btn secondary" type="button">เธขเนเธญเธเธเธฅเธฑเธ</button>
+  <button id="confirmBtn" class="btn" type="button">เธขเธทเธเธขเธฑเธเธเธฒเธฃเธชเธฑเนเธเธชเนเธ</button>
 </div>
 </div>
 
@@ -117,8 +117,8 @@ function loadSummary(){
   sumReceiverAddress.innerHTML = escapeHtml(step1.dropoffAddress || step2.receiverAddress);
   sumParcelType.innerHTML = escapeHtml(step2.parcelType);
   sumParcelWeight.innerHTML = escapeHtml(step2.parcelWeight);
-  sumDistance.innerHTML = step1.distanceKm ? `${Number(step1.distanceKm).toFixed(1)} กม.` : '...';
-  sumPrice.innerHTML = step1.priceEstimate ? `${Number(step1.priceEstimate).toLocaleString('th-TH')} บาท` : 'คำนวณจากระบบ';
+  sumDistance.innerHTML = step1.distanceKm ? `${Number(step1.distanceKm).toFixed(1)} เธเธก.` : '...';
+  sumPrice.innerHTML = step1.priceEstimate ? `${Number(step1.priceEstimate).toLocaleString('th-TH')} เธเธฒเธ—` : 'เธเธณเธเธงเธ“เธเธฒเธเธฃเธฐเธเธ';
 
   if(step3.payment_method) paymentMethodField.value = step3.payment_method;
   if(step3.payer) payerField.value = step3.payer;
@@ -139,7 +139,7 @@ confirmBtn.addEventListener('click', () => {
   const promo_code = promoCodeField.value.trim();
 
   if(payment_method === 'transfer' && payer === 'receiver'){
-    alert('ผู้รับชำระได้เฉพาะเงินสดเท่านั้น');
+    alert('เธเธนเนเธฃเธฑเธเธเธณเธฃเธฐเนเธ”เนเน€เธเธเธฒเธฐเน€เธเธดเธเธชเธ”เน€เธ—เนเธฒเธเธฑเนเธ');
     return;
   }
 
@@ -166,7 +166,7 @@ confirmBtn.addEventListener('click', () => {
     created_from: 'parcel-prototype'
   }));
 
-  alert('บันทึกคำสั่งส่งสำเร็จ');
+  alert('เธเธฑเธเธ—เธถเธเธเธณเธชเธฑเนเธเธชเนเธเธชเธณเน€เธฃเนเธ');
   localStorage.removeItem('parcel_step1');
   localStorage.removeItem('parcel_step2');
   localStorage.removeItem('parcel_step3');
