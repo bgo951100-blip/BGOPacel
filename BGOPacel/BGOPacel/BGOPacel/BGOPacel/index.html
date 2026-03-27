@@ -1,9 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ส่งพัสดุ - เลือกจุดรับและจุดส่ง</title>
+<title>Parcel Step 1</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -15,53 +16,178 @@
 }
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111}
-header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:22px 16px 28px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
+body{
+  margin:0;
+  font-family:'Prompt',sans-serif;
+  background:var(--bg);
+  color:#111;
+}
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:22px 16px 28px;
+  border-bottom-left-radius:22px;
+  border-bottom-right-radius:22px;
+}
 h1{margin:0;font-size:18px}
 p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
-.card{background:var(--card);margin:16px;padding:16px;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
-.map{width:100%;height:280px;border-radius:16px;overflow:hidden;margin-top:10px;background:#e5e7eb;border:2px solid transparent}
-.map.fullscreen{position:fixed;inset:0;margin:0;height:100dvh;width:100dvw;border-radius:0;z-index:999}
-.map-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;z-index:998;transition:opacity .2s ease}
-.map-backdrop.show{opacity:1;pointer-events:auto}
-.map-toolbar{position:fixed;top:10px;left:10px;right:10px;z-index:1000;display:none;gap:8px}
-.map-toolbar.show{display:flex}
-.map-toolbar input{flex:1;border-radius:12px;border:1px solid #d1d5db;padding:12px;font-family:'Prompt',sans-serif}
-.map-hint{position:fixed;bottom:16px;left:16px;right:16px;z-index:1000;display:none}
-.map-hint.show{display:block}
-.map-hint .btn{width:100%}
-@media (max-width:600px){.map{height:340px}.btn{font-size:16px;padding:16px}input,select,textarea{font-size:16px}}
-.map.active-pickup{border-color:#0b3c6d}
-.map.active-dropoff{border-color:#1e88e5}
-body.map-open{overflow:hidden}
+.card{
+  background:var(--card);
+  margin:16px;
+  padding:16px;
+  border-radius:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+.map{
+  width:100%;
+  height:280px;
+  border-radius:16px;
+  overflow:hidden;
+  margin-top:10px;
+  background:#e5e7eb;
+  border:2px solid transparent;
+}
+.map.fullscreen{
+  position:fixed;
+  inset:0;
+  margin:0;
+  height:100dvh;
+  width:100dvw;
+  border-radius:0;
+  z-index:999;
+}
+.map-backdrop{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  opacity:0;
+  pointer-events:none;
+  z-index:998;
+  transition:opacity .2s ease;
+}
+.map-backdrop.show{
+  opacity:1;
+  pointer-events:auto;
+}
+.map-toolbar{
+  position:fixed;
+  top:10px;
+  left:10px;
+  right:10px;
+  z-index:1000;
+  display:none;
+  gap:8px;
+}
+.map-toolbar.show{
+  display:flex;
+}
+.map-toolbar input{
+  flex:1;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  padding:12px;
+  font-family:'Prompt',sans-serif;
+}
+.map-hint{
+  position:fixed;
+  bottom:16px;
+  left:16px;
+  right:16px;
+  z-index:1000;
+  display:none;
+}
+.map-hint.show{
+  display:block;
+}
+.map-hint .btn{
+  width:100%;
+}
+@media (max-width: 600px){
+  .map{height:340px;}
+  .btn{font-size:16px;padding:16px;}
+  input,select,textarea{font-size:16px;}
+}
+.map.active-pickup{
+  border-color:#0b3c6d;
+}
+.map.active-dropoff{
+  border-color:#1e88e5;
+}
+body.map-open{
+  overflow:hidden;
+}
 label{font-size:13px;color:#374151;margin-top:12px;display:block}
-input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:1px solid #d1d5db;font-family:'Prompt',sans-serif}
-.section-title{font-weight:600;margin-bottom:6px}
-.footer{position:fixed;bottom:0;left:0;right:0;padding:14px 16px;background:#fff;border-top:1px solid #e5e7eb}
-.btn-row{display:flex;gap:10px}
-.btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px;border-radius:14px;text-align:center;font-weight:500;border:none;width:100%;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif}
-.btn.secondary{background:#eef2f7;color:#0b3c6d}
-.btn:disabled{opacity:.6;cursor:not-allowed}
-.summary-row{display:flex;justify-content:space-between;margin-top:6px;font-size:14px;gap:12px}
-.summary-row span:last-child{text-align:right;word-break:break-word;max-width:58%}
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  font-family:'Prompt',sans-serif;
+}
+.section-title{
+  font-weight:600;
+  margin-bottom:6px;
+}
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:14px 16px;
+  background:#fff;
+  border-top:1px solid #e5e7eb;
+}
+.btn-row{
+  display:flex;
+  gap:10px;
+}
+.btn{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:500;
+  border:none;
+  width:100%;
+  cursor:pointer;
+  font-size:15px;
+  font-family:'Prompt',sans-serif;
+}
+.btn.secondary{
+  background:#eef2f7;
+  color:#0b3c6d;
+}
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:6px;
+  font-size:14px;
+}
 </style>
+
 </head>
 <body>
 <header>
-<h1>เลือกจุดรับและจุดส่งพัสดุ</h1>
+<h1>เลือกจุดรับ - ส่งพัสดุ</h1>
 <p class="sub">ปักหมุดให้เรียบร้อยก่อนดำเนินการต่อ</p>
 </header>
 <div class="card">
-<label>จุดรับพัสดุ</label>
-<button id="pickupBtn" class="btn secondary" type="button">ค้นหาตำแหน่งบนแผนที่</button>
+<label>📍 จุดรับพัสดุ</label>
+<button id="pickupBtn" class="btn secondary" type="button">ค้นหาที่อยู่บนแผนที่</button>
 <div class="summary-row"><span>ที่อยู่ผู้ส่ง</span><span id="pickupText">-</span></div>
-<label>จุดส่งพัสดุ</label>
-<button id="dropoffBtn" class="btn secondary" type="button">ค้นหาตำแหน่งบนแผนที่</button>
+<label>🏁 จุดส่งพัสดุ</label>
+<button id="dropoffBtn" class="btn secondary" type="button">ค้นหาที่อยู่บนแผนที่</button>
 <div class="summary-row"><span>ที่อยู่ผู้รับ</span><span id="dropoffText">-</span></div>
 </div>
 <div class="card">
   <div class="section-title">แผนที่</div>
-  <div class="summary-row"><span>สถานะการเลือก</span><span id="activeHint">แตะช่องผู้ส่งหรือผู้รับก่อน</span></div>
+  <div class="summary-row"><span>เลือกจากแผนที่</span><span id="activeHint">แตะช่องผู้ส่งหรือผู้รับ</span></div>
   <div class="map" id="map"></div>
   <div class="summary-row"><span>ระยะทางประมาณ</span><span id="distanceText">-</span></div>
   <div class="summary-row"><span>ราคาประมาณ</span><span id="priceText">-</span></div>
@@ -73,7 +199,7 @@ input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;
 </div>
 <div id="mapBackdrop" class="map-backdrop"></div>
 <div id="mapToolbar" class="map-toolbar">
-  <input id="mapSearch" placeholder="ค้นหาสถานที่หรือที่อยู่">
+  <input id="mapSearch" placeholder="ค้นหาที่อยู่">
   <button id="closeMap" class="btn secondary" type="button">ปิด</button>
 </div>
 <div id="mapHint" class="map-hint">
@@ -108,8 +234,6 @@ let priceEstimate = null;
 
 const PRICE_BASE = 30;
 const PRICE_PER_KM = 8;
-const DEFAULT_CENTER = { lat: 5.77434, lng: 101.07231 };
-const DEFAULT_PLACE = 'หอนาฬิกาเทศบาลเมืองเบตง';
 
 function updateEstimate(){
   if(distanceKm === null){
@@ -175,10 +299,10 @@ function setMarker(position, type){
           calcRoute();
         });
       });
-    } else {
+    }else{
       pickupMarker.setPosition(position);
     }
-  } else {
+  }else{
     if(!dropoffMarker){
       dropoffMarker = new google.maps.Marker({map, position, label:'B', draggable:true});
       dropoffMarker.addListener('dragend', () => {
@@ -190,7 +314,7 @@ function setMarker(position, type){
           calcRoute();
         });
       });
-    } else {
+    }else{
       dropoffMarker.setPosition(position);
     }
   }
@@ -205,7 +329,7 @@ function setActiveField(type){
     mapEl.classList.remove('active-dropoff');
     activeHint.textContent = 'กำลังเลือกจุดรับพัสดุ';
     confirmPoint.textContent = 'ยืนยันจุดรับพัสดุ';
-  } else {
+  }else{
     mapEl.classList.add('active-dropoff');
     mapEl.classList.remove('active-pickup');
     activeHint.textContent = 'กำลังเลือกจุดส่งพัสดุ';
@@ -234,14 +358,18 @@ function reverseGeocode(latLng, cb){
 
 window.initMap = function initMap(){
   map = new google.maps.Map(document.getElementById('map'), {
-    center: DEFAULT_CENTER,
+    center: {lat: 6.555, lng: 101.09},
     zoom: 13,
     disableDefaultUI: true,
     zoomControl: true
   });
   geocoder = new google.maps.Geocoder();
   directionsService = new google.maps.DirectionsService();
-  directionsRenderer = new google.maps.DirectionsRenderer({ map, suppressMarkers: true, preserveViewport: true });
+  directionsRenderer = new google.maps.DirectionsRenderer({
+    map,
+    suppressMarkers: true,
+    preserveViewport: true
+  });
 
   const searchAuto = new google.maps.places.Autocomplete(mapSearch);
   searchAuto.bindTo('bounds', map);
@@ -269,6 +397,7 @@ window.initMap = function initMap(){
     });
   });
 
+  // preload if exists
   try{
     const saved = JSON.parse(localStorage.getItem('parcel_step1') || '{}');
     if(saved.pickupAddress) pickupText.textContent = saved.pickupAddress;
@@ -284,6 +413,7 @@ window.initMap = function initMap(){
     }
   }catch(e){}
 
+  // default start point: user's current location (fallback to Betong clock tower)
   if((pickupText.textContent === '-' || !pickupText.textContent.trim()) && !pickupMarker){
     if(navigator.geolocation){
       navigator.geolocation.getCurrentPosition(
@@ -299,7 +429,7 @@ window.initMap = function initMap(){
           });
         },
         () => {
-          geocoder.geocode({address: DEFAULT_PLACE}, (results, status) => {
+          geocoder.geocode({address:'หอนาฬิกาเทศบาลเมืองเบตง'}, (results, status) => {
             if(status === 'OK' && results && results[0]){
               const loc = results[0].geometry.location;
               map.setCenter(loc);
@@ -317,7 +447,7 @@ window.initMap = function initMap(){
   }
 
   if((dropoffText.textContent === '-' || !dropoffText.textContent.trim()) && !dropoffMarker){
-    geocoder.geocode({address: DEFAULT_PLACE}, (results, status) => {
+    geocoder.geocode({address:'หอนาฬิกาเทศบาลเมืองเบตง'}, (results, status) => {
       if(status === 'OK' && results && results[0]){
         const loc = results[0].geometry.location;
         setActiveField('dropoff');
@@ -340,12 +470,12 @@ function syncButton(){
 nextBtn.addEventListener('click', () => {
   const pickup = pickupText.textContent.trim();
   const dropoff = dropoffText.textContent.trim();
-  if(!pickup || !dropoff || pickup === '-' || dropoff === '-'){
+  if(!pickup || !dropoff){
     syncButton();
     return;
   }
   updateStorage();
-  window.location.href = 'pacel2.html';
+  window.location.href = 'indexpacel2.html';
 });
 
 function openMap(type){

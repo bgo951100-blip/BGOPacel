@@ -1,22 +1,97 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ส่งพัสดุ - ข้อมูลผู้ส่งและผู้รับ</title>
+<title>Parcel Step 2</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--primary:#0b3c6d;--secondary:#1e88e5;--bg:#f4f7fb;--card:#ffffff}
+:root{
+  --primary:#0b3c6d;
+  --secondary:#1e88e5;
+  --bg:#f4f7fb;
+  --card:#ffffff;
+}
 *{box-sizing:border-box}
-body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111;padding-bottom:100px}
-header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:22px 16px 28px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
-h1{margin:0;font-size:18px}p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
-.card{background:var(--card);margin:16px;padding:16px;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+body{
+  margin:0;
+  font-family:'Prompt',sans-serif;
+  background:var(--bg);
+  color:#111;
+  padding-bottom:100px; /* กัน footer บัง */
+}
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:22px 16px 28px;
+  border-bottom-left-radius:22px;
+  border-bottom-right-radius:22px;
+}
+h1{margin:0;font-size:18px}
+p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
+.card{
+  background:var(--card);
+  margin:16px;
+  padding:16px;
+  border-radius:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
 label{font-size:13px;color:#374151;margin-top:12px;display:block}
-input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:1px solid #d1d5db;font-family:'Prompt',sans-serif}
-.section-title{font-weight:600;margin-bottom:6px}.footer{position:fixed;bottom:0;left:0;right:0;padding:14px 16px;background:#fff;border-top:1px solid #e5e7eb}.btn-row{display:flex;gap:10px}
-.btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px;border-radius:14px;text-align:center;font-weight:500;border:none;width:100%;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif}.btn.secondary{background:#eef2f7;color:#0b3c6d}.btn:disabled{opacity:.6;cursor:not-allowed}
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  font-family:'Prompt',sans-serif;
+}
+.section-title{
+  font-weight:600;
+  margin-bottom:6px;
+}
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:14px 16px;
+  background:#fff;
+  border-top:1px solid #e5e7eb;
+}
+.btn-row{
+  display:flex;
+  gap:10px;
+}
+.btn{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:500;
+  border:none;
+  width:100%;
+  cursor:pointer;
+  font-size:15px;
+  font-family:'Prompt',sans-serif;
+}
+.btn.secondary{
+  background:#eef2f7;
+  color:#0b3c6d;
+}
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:6px;
+  font-size:14px;
+}
 </style>
+
 </head>
 <body>
 <header>
@@ -31,9 +106,9 @@ input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;
 <label>ชื่อ</label>
 <input id="senderName" placeholder="ชื่อผู้ส่ง">
 <label>เบอร์โทร</label>
-<input id="senderPhone" inputmode="numeric" placeholder="เบอร์โทรศัพท์">
-<label>หมายเหตุถึงไรเดอร์</label>
-<textarea id="senderNote" placeholder="ถ้ามี"></textarea>
+<input id="senderPhone" placeholder="เบอร์โทรศัพท์">
+<label>หมายเหตุถึงไรเดอร์ (ไม่บังคับ)</label>
+<textarea id="senderNote"></textarea>
 </div>
 
 <div class="card">
@@ -43,9 +118,9 @@ input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;
 <label>ชื่อ</label>
 <input id="receiverName" placeholder="ชื่อผู้รับ">
 <label>เบอร์โทร</label>
-<input id="receiverPhone" inputmode="numeric" placeholder="เบอร์โทรศัพท์">
-<label>หมายเหตุถึงไรเดอร์</label>
-<textarea id="receiverNote" placeholder="ถ้ามี"></textarea>
+<input id="receiverPhone" placeholder="เบอร์โทรศัพท์">
+<label>หมายเหตุถึงไรเดอร์ (ไม่บังคับ)</label>
+<textarea id="receiverNote"></textarea>
 <label>ประเภทพัสดุ</label>
 <select id="parcelType">
 <option>สินค้าแฟชั่น</option>
@@ -90,10 +165,6 @@ const fields = {
 const backBtn = document.getElementById('backBtn');
 const nextBtn = document.getElementById('nextBtn');
 
-function normalizePhone(value){
-  return value.replace(/\D/g, '');
-}
-
 function isValid(){
   return fields.senderAddress.value.trim()
     && fields.senderName.value.trim()
@@ -117,35 +188,27 @@ backBtn.addEventListener('click', () => {
 });
 
 nextBtn.addEventListener('click', () => {
-  const senderPhone = normalizePhone(fields.senderPhone.value.trim());
-  const receiverPhone = normalizePhone(fields.receiverPhone.value.trim());
-
   if(!isValid()){
     syncButton();
     return;
   }
-
-  if(senderPhone.length < 9 || senderPhone.length > 10 || receiverPhone.length < 9 || receiverPhone.length > 10){
-    alert('กรุณากรอกเบอร์โทรให้ถูกต้อง');
-    return;
-  }
-
   const payload = {
     senderAddress: fields.senderAddress.value.trim(),
     senderName: fields.senderName.value.trim(),
-    senderPhone,
+    senderPhone: fields.senderPhone.value.trim(),
     senderNote: fields.senderNote.value.trim(),
     receiverAddress: fields.receiverAddress.value.trim(),
     receiverName: fields.receiverName.value.trim(),
-    receiverPhone,
+    receiverPhone: fields.receiverPhone.value.trim(),
     receiverNote: fields.receiverNote.value.trim(),
     parcelType: fields.parcelType.value,
     parcelWeight: fields.parcelWeight.value
   };
   localStorage.setItem('parcel_step2', JSON.stringify(payload));
-  window.location.href = 'pacel3.html';
+  window.location.href = 'indexpacel3.html';
 });
 
+// preload
 try{
   const step1 = JSON.parse(localStorage.getItem('parcel_step1') || '{}');
   const saved = JSON.parse(localStorage.getItem('parcel_step2') || '{}');
