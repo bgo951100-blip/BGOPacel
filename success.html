@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>&#x0E2A;&#x0E48;&#x0E07;&#x0E1E;&#x0E31;&#x0E2A;&#x0E14;&#x0E38;&#x0E2A;&#x0E33;&#x0E40;&#x0E23;&#x0E47;&#x0E08;</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--primary:#0b3c6d;--secondary:#1e88e5;--bg:#f4f7fb;--card:#ffffff;--success:#16a34a;--muted:#6b7280}
+*{box-sizing:border-box}
+body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111;padding-bottom:32px}
+header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:24px 16px 32px;border-bottom-left-radius:24px;border-bottom-right-radius:24px}
+h1{margin:0;font-size:20px}
+p.sub{margin:6px 0 0;font-size:13px;opacity:.92}
+.card{background:var(--card);margin:16px;padding:18px;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
+.status-wrap{display:flex;flex-direction:column;align-items:center;text-align:center;gap:12px}
+.status-icon{width:72px;height:72px;border-radius:999px;background:#dcfce7;display:grid;place-items:center;color:var(--success);font-size:34px;font-weight:700}
+.status-title{font-size:22px;font-weight:700}
+.status-copy{font-size:14px;color:var(--muted);line-height:1.6}
+.summary-row{display:flex;justify-content:space-between;gap:12px;margin-top:10px;font-size:14px}
+.summary-row span:last-child{text-align:right;word-break:break-word;max-width:58%}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;border-radius:999px;background:#dbeafe;color:#1d4ed8;font-size:12px;font-weight:600}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
+.btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px 16px;border-radius:14px;text-align:center;font-weight:600;border:none;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif;flex:1;min-width:140px}
+.btn.secondary{background:#eef2f7;color:#0b3c6d}
+@media (max-width:600px){.btn-row{flex-direction:column}}
+</style>
+</head>
+<body>
+<header>
+  <h1>&#x0E2A;&#x0E48;&#x0E07;&#x0E04;&#x0E33;&#x0E2A;&#x0E31;&#x0E48;&#x0E07;&#x0E2A;&#x0E48;&#x0E07;&#x0E2A;&#x0E33;&#x0E40;&#x0E23;&#x0E47;&#x0E08;</h1>
+  <p class="sub">&#x0E23;&#x0E30;&#x0E1A;&#x0E1A;&#x0E1A;&#x0E31;&#x0E19;&#x0E17;&#x0E36;&#x0E01;&#x0E23;&#x0E32;&#x0E22;&#x0E01;&#x0E32;&#x0E23;&#x0E40;&#x0E23;&#x0E35;&#x0E22;&#x0E1A;&#x0E23;&#x0E49;&#x0E2D;&#x0E22;&#x0E41;&#x0E25;&#x0E49;&#x0E27;</p>
+</header>
+
+<div class="card">
+  <div class="status-wrap">
+    <div class="status-icon">✓</div>
+    <div class="status-title">&#x0E2A;&#x0E31;&#x0E48;&#x0E07;&#x0E2A;&#x0E48;&#x0E07;&#x0E2A;&#x0E33;&#x0E40;&#x0E23;&#x0E47;&#x0E08;</div>
+    <div class="status-copy">&#x0E17;&#x0E35;&#x0E21;&#x0E07;&#x0E32;&#x0E19;&#x0E08;&#x0E30;&#x0E40;&#x0E23;&#x0E34;&#x0E48;&#x0E21;&#x0E14;&#x0E33;&#x0E40;&#x0E19;&#x0E34;&#x0E19;&#x0E01;&#x0E32;&#x0E23;&#x0E2B;&#x0E32;&#x0E44;&#x0E23;&#x0E40;&#x0E14;&#x0E2D;&#x0E23;&#x0E4C;&#x0E43;&#x0E2B;&#x0E49;&#x0E04;&#x0E38;&#x0E13;&#x0E2B;&#x0E25;&#x0E31;&#x0E07;&#x0E08;&#x0E32;&#x0E01;&#x0E19;&#x0E35;&#x0E49;</div>
+    <div class="badge" id="orderStatus">&#x0E2A;&#x0E16;&#x0E32;&#x0E19;&#x0E30;: &#x0E23;&#x0E2D;&#x0E22;&#x0E37;&#x0E19;&#x0E22;&#x0E31;&#x0E19;&#x0E04;&#x0E33;&#x0E2A;&#x0E31;&#x0E48;&#x0E07;</div>
+  </div>
+</div>
+
+<div class="card">
+  <div style="font-weight:600;margin-bottom:6px">&#x0E23;&#x0E32;&#x0E22;&#x0E25;&#x0E30;&#x0E40;&#x0E2D;&#x0E35;&#x0E22;&#x0E14;&#x0E04;&#x0E33;&#x0E2A;&#x0E31;&#x0E48;&#x0E07;</div>
+  <div class="summary-row"><span>&#x0E08;&#x0E38;&#x0E14;&#x0E23;&#x0E31;&#x0E1A;</span><span id="pickupAddress">-</span></div>
+  <div class="summary-row"><span>&#x0E08;&#x0E38;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;</span><span id="dropoffAddress">-</span></div>
+  <div class="summary-row"><span>&#x0E04;&#x0E48;&#x0E32;&#x0E08;&#x0E31;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;</span><span id="deliveryFee">-</span></div>
+  <div class="summary-row"><span>&#x0E27;&#x0E34;&#x0E18;&#x0E35;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;</span><span id="paymentMethod">-</span></div>
+  <div class="summary-row"><span>&#x0E2A;&#x0E23;&#x0E49;&#x0E32;&#x0E07;&#x0E40;&#x0E21;&#x0E37;&#x0E48;&#x0E2D;</span><span id="submittedAt">-</span></div>
+</div>
+
+<div class="card">
+  <div class="btn-row">
+    <button class="btn" type="button" onclick="window.location.href='index.html'">&#x0E2A;&#x0E48;&#x0E07;&#x0E1E;&#x0E31;&#x0E2A;&#x0E14;&#x0E38;&#x0E43;&#x0E2B;&#x0E21;&#x0E48;</button>
+    <button class="btn secondary" type="button" onclick="window.location.href='pacel2.html'">&#x0E01;&#x0E25;&#x0E31;&#x0E1A;&#x0E44;&#x0E1B;&#x0E41;&#x0E01;&#x0E49;&#x0E44;&#x0E02;</button>
+  </div>
+</div>
+
+<script>
+const TH = {
+  baht: '\u0E1A\u0E32\u0E17',
+  unknown: '\u0E44\u0E21\u0E48\u0E23\u0E30\u0E1A\u0E38',
+  cash: '\u0E40\u0E07\u0E34\u0E19\u0E2A\u0E14',
+  transfer: '\u0E42\u0E2D\u0E19'
+};
+
+function escapeHtml(value){
+  return String(value || '-')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function formatDate(value){
+  if(!value) return '-';
+  const date = new Date(value);
+  if(Number.isNaN(date.getTime())) return escapeHtml(value);
+  return date.toLocaleString('th-TH', { dateStyle: 'medium', timeStyle: 'short' });
+}
+
+const draft = JSON.parse(localStorage.getItem('parcel_last_submission') || '{}');
+if(!draft.pickup_address || !draft.dropoff_address){
+  window.location.href = 'index.html';
+}
+
+document.getElementById('pickupAddress').innerHTML = escapeHtml(draft.pickup_address);
+document.getElementById('dropoffAddress').innerHTML = escapeHtml(draft.dropoff_address);
+document.getElementById('deliveryFee').textContent = draft.delivery_fee ? `${Number(draft.delivery_fee).toLocaleString('th-TH')} ${TH.baht}` : TH.unknown;
+document.getElementById('paymentMethod').textContent = draft.payment_method === 'transfer' ? TH.transfer : TH.cash;
+document.getElementById('submittedAt').textContent = formatDate(draft.submitted_at);
+</script>
+</body>
+</html>

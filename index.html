@@ -9,25 +9,24 @@
 :root{--primary:#0b3c6d;--secondary:#1e88e5;--bg:#f4f7fb;--card:#ffffff;--muted:#6b7280}
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111;padding-bottom:110px}
+body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111;padding-bottom:24px}
 header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:22px 16px 28px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
 h1{margin:0;font-size:18px}
 p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
 .card{background:var(--card);margin:16px;padding:16px;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
 label{font-size:13px;color:#374151;margin-top:12px;display:block}
 input,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:1px solid #d1d5db;font-family:'Prompt',sans-serif}
+input[readonly]{background:#fff;cursor:pointer}
 textarea{resize:vertical;min-height:84px}
 .section-title{font-weight:600;margin-bottom:6px}
-.footer{margin:0 16px 24px;padding:0;background:transparent;border-top:0}
-.btn-row{display:flex;gap:10px}
+.btn-row{display:flex;gap:10px;flex-wrap:wrap}
 .btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px;border-radius:14px;text-align:center;font-weight:500;border:none;width:100%;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif}
 .btn.secondary{background:#eef2f7;color:#0b3c6d}
+.btn.inline{width:auto;padding:10px 14px;font-size:14px}
 .btn:disabled{opacity:.6;cursor:not-allowed}
 .summary-row{display:flex;justify-content:space-between;margin-top:6px;font-size:14px;gap:12px}
 .summary-row span:last-child{text-align:right;word-break:break-word;max-width:58%}
 .location-block{padding:14px;border:1px solid #e5e7eb;border-radius:16px;background:#fbfdff}.location-block + .location-block{margin-top:14px}
-.map-preview{height:180px;margin-top:10px;border-radius:16px;border:2px solid transparent;background:#e5e7eb;overflow:hidden}
-.map-preview.active-pickup{border-color:#0b3c6d}.map-preview.active-dropoff{border-color:#1e88e5}
 .map-backdrop{position:fixed;inset:0;background:rgba(0,0,0,.55);opacity:0;pointer-events:none;z-index:998;transition:opacity .2s ease}
 .map-backdrop.show{opacity:1;pointer-events:auto}
 .map-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(calc(100vw - 24px),640px);display:none;z-index:999}
@@ -41,20 +40,22 @@ textarea{resize:vertical;min-height:84px}
 .map-hint.show{display:block}
 .map-hint .btn{width:100%;box-shadow:0 14px 30px rgba(30,136,229,.35)}
 body.map-open{overflow:hidden}
-@media (max-width:600px){body{padding-bottom:120px}input,textarea,.btn{font-size:16px}.map-preview{height:160px}.map-modal{width:calc(100vw - 18px)}.map-modal-card{border-radius:20px;padding:10px}.map-live{height:min(68dvh,420px);border-radius:16px}.map-toolbar{top:18px;left:18px;right:18px}.map-hint{left:18px;right:18px;bottom:18px}}
+@media (max-width:600px){input,textarea,.btn{font-size:16px}.map-modal{width:calc(100vw - 18px)}.map-modal-card{border-radius:20px;padding:10px}.map-live{height:min(68dvh,420px);border-radius:16px}.map-toolbar{top:18px;left:18px;right:18px}.map-hint{left:18px;right:18px;bottom:18px}.btn.inline{width:100%}}
 </style>
 </head>
 <body>
 <header>
 <h1>&#x0E40;&#x0E25;&#x0E37;&#x0E2D;&#x0E01;&#x0E08;&#x0E38;&#x0E14;&#x0E23;&#x0E31;&#x0E1A;&#x0E41;&#x0E25;&#x0E30;&#x0E08;&#x0E38;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;&#x0E1E;&#x0E31;&#x0E2A;&#x0E14;&#x0E38;</h1>
-<p class="sub">&#x0E1B;&#x0E31;&#x0E01;&#x0E2B;&#x0E21;&#x0E38;&#x0E14;&#x0E41;&#x0E25;&#x0E30;&#x0E23;&#x0E30;&#x0E1A;&#x0E38;&#x0E23;&#x0E32;&#x0E22;&#x0E25;&#x0E30;&#x0E40;&#x0E2D;&#x0E35;&#x0E22;&#x0E14;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E43;&#x0E2B;&#x0E49;&#x0E04;&#x0E23;&#x0E1A;&#x0E01;&#x0E48;&#x0E2D;&#x0E19;&#x0E14;&#x0E33;&#x0E40;&#x0E19;&#x0E34;&#x0E19;&#x0E01;&#x0E32;&#x0E23;&#x0E15;&#x0E48;&#x0E2D;</p>
+<p class="sub">&#x0E41;&#x0E15;&#x0E30;&#x0E17;&#x0E35;&#x0E48;&#x0E0A;&#x0E48;&#x0E2D;&#x0E07;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E40;&#x0E1E;&#x0E37;&#x0E48;&#x0E2D;&#x0E40;&#x0E25;&#x0E37;&#x0E2D;&#x0E01;&#x0E15;&#x0E33;&#x0E41;&#x0E2B;&#x0E19;&#x0E48;&#x0E07;&#x0E1A;&#x0E19;&#x0E41;&#x0E1C;&#x0E19;&#x0E17;&#x0E35;&#x0E48;</p>
 </header>
 
 <div class="card">
   <div class="location-block">
     <label>&#x0E08;&#x0E38;&#x0E14;&#x0E23;&#x0E31;&#x0E1A;&#x0E1E;&#x0E31;&#x0E2A;&#x0E14;&#x0E38;</label>
-    <input id="pickupSearchField" placeholder="&#x0E1E;&#x0E34;&#x0E21;&#x0E1E;&#x0E4C;&#x0E04;&#x0E49;&#x0E19;&#x0E2B;&#x0E32;&#x0E2A;&#x0E16;&#x0E32;&#x0E19;&#x0E17;&#x0E35;&#x0E48;&#x0E2B;&#x0E23;&#x0E37;&#x0E2D;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E08;&#x0E38;&#x0E14;&#x0E23;&#x0E31;&#x0E1A;">
-    <button id="pickupBtn" class="btn secondary" type="button">&#x0E04;&#x0E49;&#x0E19;&#x0E2B;&#x0E32;&#x0E15;&#x0E33;&#x0E41;&#x0E2B;&#x0E19;&#x0E48;&#x0E07;&#x0E1A;&#x0E19;&#x0E41;&#x0E1C;&#x0E19;&#x0E17;&#x0E35;&#x0E48;</button>
+    <input id="pickupSearchField" placeholder="&#x0E43;&#x0E2A;&#x0E48;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E1C;&#x0E39;&#x0E49;&#x0E2A;&#x0E48;&#x0E07;&#x0E17;&#x0E35;&#x0E48;&#x0E19;&#x0E35;&#x0E48;" readonly>
+    <div class="btn-row" style="margin-top:10px">
+      <button id="pickupCurrentBtn" class="btn secondary inline" type="button">&#x0E43;&#x0E0A;&#x0E49;&#x0E15;&#x0E33;&#x0E41;&#x0E2B;&#x0E19;&#x0E48;&#x0E07;&#x0E1B;&#x0E31;&#x0E08;&#x0E08;&#x0E38;&#x0E1A;&#x0E31;&#x0E19;</button>
+    </div>
     <div class="summary-row"><span>&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E1C;&#x0E39;&#x0E49;&#x0E2A;&#x0E48;&#x0E07;</span><span id="pickupText">-</span></div>
     <label for="pickupNote">&#x0E2B;&#x0E21;&#x0E32;&#x0E22;&#x0E40;&#x0E2B;&#x0E15;&#x0E38;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E08;&#x0E38;&#x0E14;&#x0E23;&#x0E31;&#x0E1A;</label>
     <textarea id="pickupNote" placeholder="&#x0E40;&#x0E0A;&#x0E48;&#x0E19; &#x0E1A;&#x0E49;&#x0E32;&#x0E19;&#x0E2B;&#x0E25;&#x0E31;&#x0E07;&#x0E21;&#x0E38;&#x0E21;&#x0E0B;&#x0E2D;&#x0E22;, &#x0E15;&#x0E23;&#x0E07;&#x0E02;&#x0E49;&#x0E32;&#x0E21;&#x0E23;&#x0E49;&#x0E32;&#x0E19;&#x0E22;&#x0E32;, &#x0E42;&#x0E17;&#x0E23;&#x0E01;&#x0E48;&#x0E2D;&#x0E19;&#x0E16;&#x0E36;&#x0E07;"></textarea>
@@ -62,8 +63,7 @@ body.map-open{overflow:hidden}
 
   <div class="location-block">
     <label>&#x0E08;&#x0E38;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;&#x0E1E;&#x0E31;&#x0E2A;&#x0E14;&#x0E38;</label>
-    <input id="dropoffSearchField" placeholder="&#x0E1E;&#x0E34;&#x0E21;&#x0E1E;&#x0E4C;&#x0E04;&#x0E49;&#x0E19;&#x0E2B;&#x0E32;&#x0E2A;&#x0E16;&#x0E32;&#x0E19;&#x0E17;&#x0E35;&#x0E48;&#x0E2B;&#x0E23;&#x0E37;&#x0E2D;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E08;&#x0E38;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;">
-    <button id="dropoffBtn" class="btn secondary" type="button">&#x0E04;&#x0E49;&#x0E19;&#x0E2B;&#x0E32;&#x0E15;&#x0E33;&#x0E41;&#x0E2B;&#x0E19;&#x0E48;&#x0E07;&#x0E1A;&#x0E19;&#x0E41;&#x0E1C;&#x0E19;&#x0E17;&#x0E35;&#x0E48;</button>
+    <input id="dropoffSearchField" placeholder="&#x0E43;&#x0E2A;&#x0E48;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E1C;&#x0E39;&#x0E49;&#x0E23;&#x0E31;&#x0E1A;&#x0E17;&#x0E35;&#x0E48;&#x0E19;&#x0E35;&#x0E48;" readonly>
     <div class="summary-row"><span>&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E1C;&#x0E39;&#x0E49;&#x0E23;&#x0E31;&#x0E1A;</span><span id="dropoffText">-</span></div>
     <label for="dropoffNote">&#x0E2B;&#x0E21;&#x0E32;&#x0E22;&#x0E40;&#x0E2B;&#x0E15;&#x0E38;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E08;&#x0E38;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;</label>
     <textarea id="dropoffNote" placeholder="&#x0E40;&#x0E0A;&#x0E48;&#x0E19; &#x0E1D;&#x0E32;&#x0E01;&#x0E44;&#x0E27;&#x0E49;&#x0E01;&#x0E31;&#x0E1A; &#x0E23;&#x0E1B;&#x0E20;., &#x0E2B;&#x0E49;&#x0E2D;&#x0E07;&#x0E21;&#x0E38;&#x0E21;&#x0E0B;&#x0E49;&#x0E32;&#x0E22;, &#x0E42;&#x0E17;&#x0E23;&#x0E01;&#x0E48;&#x0E2D;&#x0E19;&#x0E40;&#x0E02;&#x0E49;&#x0E32;&#x0E2B;&#x0E21;&#x0E39;&#x0E48;&#x0E1A;&#x0E49;&#x0E32;&#x0E19;"></textarea>
@@ -71,17 +71,14 @@ body.map-open{overflow:hidden}
 </div>
 
 <div class="card">
-  <div class="section-title">&#x0E41;&#x0E1C;&#x0E19;&#x0E17;&#x0E35;&#x0E48;</div>
-  <div class="summary-row"><span>&#x0E2A;&#x0E16;&#x0E32;&#x0E19;&#x0E30;&#x0E01;&#x0E32;&#x0E23;&#x0E40;&#x0E25;&#x0E37;&#x0E2D;&#x0E01;</span><span id="activeHint">&#x0E41;&#x0E15;&#x0E30;&#x0E0A;&#x0E48;&#x0E2D;&#x0E07;&#x0E1C;&#x0E39;&#x0E49;&#x0E2A;&#x0E48;&#x0E07;&#x0E2B;&#x0E23;&#x0E37;&#x0E2D;&#x0E1C;&#x0E39;&#x0E49;&#x0E23;&#x0E31;&#x0E1A;&#x0E01;&#x0E48;&#x0E2D;&#x0E19;</span></div>
-  <div class="map-preview" id="mapPreview"></div>
+  <div class="section-title">&#x0E2A;&#x0E23;&#x0E38;&#x0E1B;&#x0E23;&#x0E30;&#x0E22;&#x0E30;&#x0E17;&#x0E32;&#x0E07;</div>
+  <div class="summary-row"><span>&#x0E2A;&#x0E16;&#x0E32;&#x0E19;&#x0E30;&#x0E01;&#x0E32;&#x0E23;&#x0E40;&#x0E25;&#x0E37;&#x0E2D;&#x0E01;</span><span id="activeHint">&#x0E01;&#x0E33;&#x0E25;&#x0E31;&#x0E07;&#x0E40;&#x0E25;&#x0E37;&#x0E2D;&#x0E01;&#x0E08;&#x0E38;&#x0E14;&#x0E23;&#x0E31;&#x0E1A;&#x0E1E;&#x0E31;&#x0E2A;&#x0E14;&#x0E38;</span></div>
   <div class="summary-row"><span>&#x0E23;&#x0E30;&#x0E22;&#x0E30;&#x0E17;&#x0E32;&#x0E07;&#x0E1B;&#x0E23;&#x0E30;&#x0E21;&#x0E32;&#x0E13;</span><span id="distanceText">-</span></div>
   <div class="summary-row"><span>&#x0E23;&#x0E32;&#x0E04;&#x0E32;&#x0E1B;&#x0E23;&#x0E30;&#x0E21;&#x0E32;&#x0E13;</span><span id="priceText">-</span></div>
 </div>
 
-<div class="footer">
-  <div class="btn-row">
-    <button id="nextBtn" class="btn" type="button">&#x0E16;&#x0E31;&#x0E14;&#x0E44;&#x0E1B;</button>
-  </div>
+<div class="card">
+  <button id="nextBtn" class="btn" type="button">&#x0E16;&#x0E31;&#x0E14;&#x0E44;&#x0E1B;</button>
 </div>
 
 <div id="mapBackdrop" class="map-backdrop"></div>
@@ -89,7 +86,7 @@ body.map-open{overflow:hidden}
   <div class="map-modal-card">
     <div id="mapToolbar" class="map-toolbar">
       <input id="mapSearch" placeholder="&#x0E04;&#x0E49;&#x0E19;&#x0E2B;&#x0E32;&#x0E2A;&#x0E16;&#x0E32;&#x0E19;&#x0E17;&#x0E35;&#x0E48;&#x0E2B;&#x0E23;&#x0E37;&#x0E2D;&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E1A;&#x0E19;&#x0E41;&#x0E1C;&#x0E19;&#x0E17;&#x0E35;&#x0E48;">
-      <button id="closeMap" class="btn secondary" type="button">&#x0E1B;&#x0E34;&#x0E14;</button>
+      <button id="closeMap" class="btn secondary inline" type="button">&#x0E1B;&#x0E34;&#x0E14;</button>
     </div>
     <div id="map" class="map-live"></div>
     <div id="mapHint" class="map-hint">
@@ -107,11 +104,13 @@ const TH = {
   activeDropoff: '\u0E01\u0E33\u0E25\u0E31\u0E07\u0E40\u0E25\u0E37\u0E2D\u0E01\u0E08\u0E38\u0E14\u0E2A\u0E48\u0E07\u0E1E\u0E31\u0E2A\u0E14\u0E38',
   confirmPickup: '\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E08\u0E38\u0E14\u0E23\u0E31\u0E1A\u0E1E\u0E31\u0E2A\u0E14\u0E38',
   confirmDropoff: '\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E08\u0E38\u0E14\u0E2A\u0E48\u0E07\u0E1E\u0E31\u0E2A\u0E14\u0E38',
-  notFound: '\u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E17\u0E35\u0E48\u0E2D\u0E22\u0E39\u0E48'
+  notFound: '\u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E17\u0E35\u0E48\u0E2D\u0E22\u0E39\u0E48',
+  currentLocationFailed: '\u0E44\u0E21\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E14\u0E36\u0E07\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19\u0E44\u0E14\u0E49'
 };
 
 const pickupBtn = document.getElementById('pickupBtn');
 const dropoffBtn = document.getElementById('dropoffBtn');
+const pickupCurrentBtn = document.getElementById('pickupCurrentBtn');
 const pickupText = document.getElementById('pickupText');
 const dropoffText = document.getElementById('dropoffText');
 const pickupSearchField = document.getElementById('pickupSearchField');
@@ -122,7 +121,6 @@ const nextBtn = document.getElementById('nextBtn');
 const distanceText = document.getElementById('distanceText');
 const priceText = document.getElementById('priceText');
 const activeHint = document.getElementById('activeHint');
-const mapPreview = document.getElementById('mapPreview');
 const mapBackdrop = document.getElementById('mapBackdrop');
 const mapModal = document.getElementById('mapModal');
 const mapToolbar = document.getElementById('mapToolbar');
@@ -133,7 +131,6 @@ const confirmPoint = document.getElementById('confirmPoint');
 const mapEl = document.getElementById('map');
 
 let map;
-let previewMap;
 let geocoder;
 let pickupMarker;
 let dropoffMarker;
@@ -175,34 +172,11 @@ function updateStorage(){
   localStorage.setItem('parcel_step1', JSON.stringify(payload));
 }
 
-function updatePreview(){
-  if(!previewMap){
-    return;
-  }
-  if(pickupMarker && dropoffMarker){
-    const bounds = new google.maps.LatLngBounds();
-    bounds.extend(pickupMarker.getPosition());
-    bounds.extend(dropoffMarker.getPosition());
-    previewMap.fitBounds(bounds, 40);
-    return;
-  }
-  if(pickupMarker){
-    previewMap.setCenter(pickupMarker.getPosition());
-    previewMap.setZoom(15);
-    return;
-  }
-  if(dropoffMarker){
-    previewMap.setCenter(dropoffMarker.getPosition());
-    previewMap.setZoom(15);
-  }
-}
-
 function calcRoute(){
   if(!pickupMarker || !dropoffMarker){
     distanceKm = null;
     updateEstimate();
     updateStorage();
-    updatePreview();
     return;
   }
   directionsService.route({
@@ -214,7 +188,6 @@ function calcRoute(){
       distanceKm = null;
       updateEstimate();
       updateStorage();
-      updatePreview();
       return;
     }
     directionsRenderer.setDirections(result);
@@ -222,21 +195,20 @@ function calcRoute(){
     distanceKm = leg.distance.value / 1000;
     updateEstimate();
     updateStorage();
-    updatePreview();
   });
 }
 
 function setMarker(position, type){
   if(type === 'pickup'){
     if(!pickupMarker){
-      pickupMarker = new google.maps.Marker({map, position, label:'A', draggable:true});
+      pickupMarker = new google.maps.Marker({ map, position, label: 'A', draggable: true });
       pickupMarker.addListener('dragend', () => handleDraggedMarker('pickup'));
     } else {
       pickupMarker.setPosition(position);
     }
   } else {
     if(!dropoffMarker){
-      dropoffMarker = new google.maps.Marker({map, position, label:'B', draggable:true});
+      dropoffMarker = new google.maps.Marker({ map, position, label: 'B', draggable: true });
       dropoffMarker.addListener('dragend', () => handleDraggedMarker('dropoff'));
     } else {
       dropoffMarker.setPosition(position);
@@ -248,9 +220,7 @@ function setMarker(position, type){
 
 function handleDraggedMarker(type){
   const marker = type === 'pickup' ? pickupMarker : dropoffMarker;
-  if(!marker){
-    return;
-  }
+  if(!marker) return;
   reverseGeocode(marker.getPosition(), (address) => {
     if(type === 'pickup'){
       pickupText.textContent = address;
@@ -261,14 +231,11 @@ function handleDraggedMarker(type){
     }
     syncButton();
     updateStorage();
-    calcRoute();
   });
 }
 
 function setActiveField(type){
   activeField = type;
-  mapPreview.classList.toggle('active-pickup', type === 'pickup');
-  mapPreview.classList.toggle('active-dropoff', type === 'dropoff');
   activeHint.textContent = type === 'pickup' ? TH.activePickup : TH.activeDropoff;
   confirmPoint.textContent = type === 'pickup' ? TH.confirmPickup : TH.confirmDropoff;
 }
@@ -288,9 +255,7 @@ function bindAutocomplete(input, type){
   autocomplete.bindTo('bounds', map);
   autocomplete.addListener('place_changed', () => {
     const place = autocomplete.getPlace();
-    if(!place.geometry){
-      return;
-    }
+    if(!place.geometry) return;
     setActiveField(type);
     setMarker(place.geometry.location, type);
     const address = place.formatted_address || input.value.trim();
@@ -303,7 +268,6 @@ function bindAutocomplete(input, type){
     }
     syncButton();
     updateStorage();
-    updatePreview();
   });
 }
 
@@ -328,12 +292,6 @@ function openMap(type){
     } else if(type === 'dropoff' && dropoffMarker){
       map.setZoom(16);
       map.panTo(dropoffMarker.getPosition());
-    } else if(pickupMarker){
-      map.setZoom(16);
-      map.panTo(pickupMarker.getPosition());
-    } else if(dropoffMarker){
-      map.setZoom(16);
-      map.panTo(dropoffMarker.getPosition());
     } else {
       map.setCenter(DEFAULT_CENTER);
       map.setZoom(13);
@@ -349,15 +307,29 @@ function closeMap(){
   mapHint.classList.remove('show');
 }
 
-window.initMap = function initMap(){
-  previewMap = new google.maps.Map(mapPreview, {
-    center: DEFAULT_CENTER,
-    zoom: 13,
-    disableDefaultUI: true,
-    gestureHandling: 'none',
-    keyboardShortcuts: false
-  });
+function useCurrentLocation(){
+  if(!navigator.geolocation){
+    alert(TH.currentLocationFailed);
+    return;
+  }
+  navigator.geolocation.getCurrentPosition(
+    (pos) => {
+      const loc = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+      setActiveField('pickup');
+      setMarker(loc, 'pickup');
+      reverseGeocode(loc, (address) => {
+        pickupText.textContent = address;
+        pickupSearchField.value = address;
+        updateStorage();
+        syncButton();
+      });
+    },
+    () => alert(TH.currentLocationFailed),
+    { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
+  );
+}
 
+window.initMap = function initMap(){
   map = new google.maps.Map(mapEl, {
     center: DEFAULT_CENTER,
     zoom: 13,
@@ -386,7 +358,6 @@ window.initMap = function initMap(){
     }
     syncButton();
     updateStorage();
-    updatePreview();
   });
 
   bindAutocomplete(pickupSearchField, 'pickup');
@@ -405,14 +376,13 @@ window.initMap = function initMap(){
       }
       syncButton();
       updateStorage();
-      updatePreview();
     });
   });
 
   pickupNote.addEventListener('input', updateStorage);
   dropoffNote.addEventListener('input', updateStorage);
 
-  try {
+  try{
     const saved = JSON.parse(localStorage.getItem('parcel_step1') || '{}');
     if(saved.pickupAddress){
       pickupText.textContent = saved.pickupAddress;
@@ -430,58 +400,22 @@ window.initMap = function initMap(){
     if(saved.dropoffLat && saved.dropoffLng){
       setMarker(new google.maps.LatLng(saved.dropoffLat, saved.dropoffLng), 'dropoff');
     }
-  } catch (e) {}
+  } catch(e) {}
 
-  if((pickupText.textContent === '-' || !pickupText.textContent.trim()) && !pickupMarker && navigator.geolocation){
-    navigator.geolocation.getCurrentPosition(
-      (pos) => {
-        const loc = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-        map.setCenter(loc);
-        setActiveField('pickup');
-        setMarker(loc, 'pickup');
-        reverseGeocode(loc, (address) => {
-          pickupText.textContent = address;
-          pickupSearchField.value = address;
-          updateStorage();
-          syncButton();
-          updatePreview();
-        });
-      },
-      () => {
-        geocoder.geocode({ address: DEFAULT_PLACE }, (results, status) => {
-          if(status === 'OK' && results && results[0]){
-            const loc = results[0].geometry.location;
-            map.setCenter(loc);
-            setActiveField('pickup');
-            setMarker(loc, 'pickup');
-            pickupText.textContent = results[0].formatted_address || pickupText.textContent;
-            pickupSearchField.value = pickupText.textContent;
-            updateStorage();
-            syncButton();
-            updatePreview();
-          }
-        });
-      },
-      { enableHighAccuracy: true, timeout: 8000, maximumAge: 60000 }
-    );
-  }
-
-  if((dropoffText.textContent === '-' || !dropoffText.textContent.trim()) && !dropoffMarker){
+  if((pickupText.textContent === '-' || !pickupText.textContent.trim()) && !pickupMarker){
     geocoder.geocode({ address: DEFAULT_PLACE }, (results, status) => {
       if(status === 'OK' && results && results[0]){
         const loc = results[0].geometry.location;
-        setActiveField('dropoff');
-        setMarker(loc, 'dropoff');
-        dropoffText.textContent = results[0].formatted_address || dropoffText.textContent;
-        dropoffSearchField.value = dropoffText.textContent;
+        setActiveField('pickup');
+        setMarker(loc, 'pickup');
+        pickupText.textContent = results[0].formatted_address || pickupText.textContent;
+        pickupSearchField.value = pickupText.textContent;
         updateStorage();
         syncButton();
-        updatePreview();
       }
     });
   }
 
-  updatePreview();
   syncButton();
 };
 
@@ -496,10 +430,11 @@ nextBtn.addEventListener('click', () => {
   window.location.href = 'pacel2.html';
 });
 
-pickupBtn.addEventListener('click', () => openMap('pickup'));
-dropoffBtn.addEventListener('click', () => openMap('dropoff'));
-pickupSearchField.addEventListener('focus', () => setActiveField('pickup'));
-dropoffSearchField.addEventListener('focus', () => setActiveField('dropoff'));
+pickupCurrentBtn.addEventListener('click', useCurrentLocation);
+pickupSearchField.addEventListener('click', () => openMap('pickup'));
+dropoffSearchField.addEventListener('click', () => openMap('dropoff'));
+pickupSearchField.addEventListener('focus', () => openMap('pickup'));
+dropoffSearchField.addEventListener('focus', () => openMap('dropoff'));
 mapBackdrop.addEventListener('click', closeMap);
 closeMapBtn.addEventListener('click', closeMap);
 confirmPoint.addEventListener('click', closeMap);
