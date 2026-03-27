@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -84,14 +84,34 @@ function escapeHtml(value){
     .replace(/'/g, '&#39;');
 }
 
-function loadSummary(){
-  let step1 = {};
-  let step2 = {};
-  let step3 = {};
+let step1 = {};
+let step2 = {};
+let step3 = {};
 
-  try{ step1 = JSON.parse(localStorage.getItem('parcel_step1') || '{}'); }catch(e){}
-  try{ step2 = JSON.parse(localStorage.getItem('parcel_step2') || '{}'); }catch(e){}
-  try{ step3 = JSON.parse(localStorage.getItem('parcel_step3') || '{}'); }catch(e){}
+function loadSteps(){
+  try{ step1 = JSON.parse(localStorage.getItem('parcel_step1') || '{}'); }catch(e){ step1 = {}; }
+  try{ step2 = JSON.parse(localStorage.getItem('parcel_step2') || '{}'); }catch(e){ step2 = {}; }
+  try{ step3 = JSON.parse(localStorage.getItem('parcel_step3') || '{}'); }catch(e){ step3 = {}; }
+
+  const hasStep1 = !!((step1.pickupAddress || '').trim() && (step1.dropoffAddress || '').trim());
+  const hasStep2 = !!((step2.senderName || '').trim() && (step2.senderPhone || '').trim() && (step2.receiverName || '').trim() && (step2.receiverPhone || '').trim());
+
+  if(!hasStep1){
+    window.location.href = 'index.html';
+    return false;
+  }
+  if(!hasStep2){
+    window.location.href = 'pacel2.html';
+    return false;
+  }
+
+  return true;
+}
+
+function loadSummary(){
+  if(!loadSteps()){
+    return;
+  }
 
   sumSenderAddress.innerHTML = escapeHtml(step1.pickupAddress || step2.senderAddress);
   sumReceiverAddress.innerHTML = escapeHtml(step1.dropoffAddress || step2.receiverAddress);
@@ -110,6 +130,10 @@ backBtn.addEventListener('click', () => {
 });
 
 confirmBtn.addEventListener('click', () => {
+  if(!loadSteps()){
+    return;
+  }
+
   const payment_method = paymentMethodField.value;
   const payer = payerField.value;
   const promo_code = promoCodeField.value.trim();
@@ -118,9 +142,6 @@ confirmBtn.addEventListener('click', () => {
     alert('ผู้รับชำระได้เฉพาะเงินสดเท่านั้น');
     return;
   }
-
-  const step1 = JSON.parse(localStorage.getItem('parcel_step1') || '{}');
-  const step2 = JSON.parse(localStorage.getItem('parcel_step2') || '{}');
 
   localStorage.setItem('parcel_step3', JSON.stringify({ payment_method, payer, promo_code }));
 
