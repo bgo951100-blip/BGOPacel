@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -94,6 +94,15 @@ function normalizePhone(value){
   return value.replace(/\D/g, '');
 }
 
+function sanitizeAddress(value){
+  const cleaned = (value || '')
+    .replace(/^[A-Z0-9+]{4,}\s*/i, '')
+    .replace(/\s*ประเทศไทย$/, '')
+    .replace(/\s+/g, ' ')
+    .trim();
+  return cleaned;
+}
+
 function isValid(){
   return fields.senderAddress.value.trim()
     && fields.senderName.value.trim()
@@ -131,11 +140,11 @@ nextBtn.addEventListener('click', () => {
   }
 
   const payload = {
-    senderAddress: fields.senderAddress.value.trim(),
+    senderAddress: sanitizeAddress(fields.senderAddress.value.trim()),
     senderName: fields.senderName.value.trim(),
     senderPhone,
     senderNote: fields.senderNote.value.trim(),
-    receiverAddress: fields.receiverAddress.value.trim(),
+    receiverAddress: sanitizeAddress(fields.receiverAddress.value.trim()),
     receiverName: fields.receiverName.value.trim(),
     receiverPhone,
     receiverNote: fields.receiverNote.value.trim(),
@@ -151,14 +160,14 @@ try{
   const saved = JSON.parse(localStorage.getItem('parcel_step2') || '{}');
   Object.keys(fields).forEach(key => {
     if(saved[key] !== undefined && saved[key] !== null){
-      fields[key].value = saved[key];
+      fields[key].value = key === 'senderAddress' || key === 'receiverAddress' ? sanitizeAddress(saved[key]) : saved[key];
     }
   });
   if(!fields.senderAddress.value && step1.pickupAddress){
-    fields.senderAddress.value = step1.pickupAddress;
+    fields.senderAddress.value = sanitizeAddress(step1.pickupAddress);
   }
   if(!fields.receiverAddress.value && step1.dropoffAddress){
-    fields.receiverAddress.value = step1.dropoffAddress;
+    fields.receiverAddress.value = sanitizeAddress(step1.dropoffAddress);
   }
 }catch(e){}
 syncButton();
