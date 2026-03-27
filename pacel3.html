@@ -3,72 +3,89 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>เธชเนเธเธเธฑเธชเธ”เธธ - เธชเธฃเธธเธเนเธฅเธฐเธเธณเธฃเธฐเน€เธเธดเธ</title>
+<title>&#x0E2A;&#x0E48;&#x0E07;&#x0E1E;&#x0E31;&#x0E2A;&#x0E14;&#x0E38; - &#x0E2A;&#x0E23;&#x0E38;&#x0E1B;&#x0E41;&#x0E25;&#x0E30;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;&#x0E40;&#x0E07;&#x0E34;&#x0E19;</title>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--primary:#0b3c6d;--secondary:#1e88e5;--bg:#f4f7fb;--card:#ffffff}
 *{box-sizing:border-box}
-body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111;padding-bottom:100px}
+body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111;padding-bottom:110px}
 header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:22px 16px 28px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
-h1{margin:0;font-size:18px}p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
+h1{margin:0;font-size:18px}
+p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
 .card{background:var(--card);margin:16px;padding:16px;border-radius:18px;box-shadow:0 6px 18px rgba(0,0,0,.06)}
 label{font-size:13px;color:#374151;margin-top:12px;display:block}
 input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:1px solid #d1d5db;font-family:'Prompt',sans-serif}
-.section-title{font-weight:600;margin-bottom:6px}.footer{position:fixed;bottom:0;left:0;right:0;padding:14px 16px;background:#fff;border-top:1px solid #e5e7eb}.btn-row{display:flex;gap:10px}
-.btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px;border-radius:14px;text-align:center;font-weight:500;border:none;width:100%;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif}.btn.secondary{background:#eef2f7;color:#0b3c6d}
+.section-title{font-weight:600;margin-bottom:6px}
+.footer{position:fixed;bottom:0;left:0;right:0;padding:14px 16px;background:#fff;border-top:1px solid #e5e7eb}
+.btn-row{display:flex;gap:10px}
+.btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px;border-radius:14px;text-align:center;font-weight:500;border:none;width:100%;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif}
+.btn.secondary{background:#eef2f7;color:#0b3c6d}
 .summary-row{display:flex;justify-content:space-between;margin-top:8px;gap:12px;font-size:14px}.summary-row span:last-child{text-align:right;word-break:break-word;max-width:58%}
+@media (max-width:600px){body{padding-bottom:120px}input,select,textarea,.btn{font-size:16px}}
 </style>
 </head>
 <body>
 <header>
-<h1>เธชเธฃเธธเธเนเธฅเธฐเธเธณเธฃเธฐเน€เธเธดเธ</h1>
-<p class="sub">เธ•เธฃเธงเธเธชเธญเธเธเนเธญเธกเธนเธฅเธเนเธญเธเธขเธทเธเธขเธฑเธ</p>
+<h1>&#x0E2A;&#x0E23;&#x0E38;&#x0E1B;&#x0E41;&#x0E25;&#x0E30;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;&#x0E40;&#x0E07;&#x0E34;&#x0E19;</h1>
+<p class="sub">&#x0E15;&#x0E23;&#x0E27;&#x0E08;&#x0E2A;&#x0E2D;&#x0E1A;&#x0E02;&#x0E49;&#x0E2D;&#x0E21;&#x0E39;&#x0E25;&#x0E01;&#x0E48;&#x0E2D;&#x0E19;&#x0E22;&#x0E37;&#x0E19;&#x0E22;&#x0E31;&#x0E19;</p>
 </header>
 
 <div class="card">
-<div class="section-title">เธชเธฃเธธเธเธฃเธฒเธขเธเธฒเธฃ</div>
-<div class="summary-row"><span>เธ—เธตเนเธญเธขเธนเนเธเธนเนเธชเนเธ</span><span id="sumSenderAddress">...</span></div>
-<div class="summary-row"><span>เธ—เธตเนเธญเธขเธนเนเธเธนเนเธฃเธฑเธ</span><span id="sumReceiverAddress">...</span></div>
-<div class="summary-row"><span>เธเธฃเธฐเน€เธ เธ—เธเธฑเธชเธ”เธธ</span><span id="sumParcelType">...</span></div>
-<div class="summary-row"><span>เธเนเธณเธซเธเธฑเธ</span><span id="sumParcelWeight">...</span></div>
-<div class="summary-row"><span>เธฃเธฐเธขเธฐเธ—เธฒเธเธเธฃเธฐเธกเธฒเธ“</span><span id="sumDistance">...</span></div>
+<div class="section-title">&#x0E2A;&#x0E23;&#x0E38;&#x0E1B;&#x0E23;&#x0E32;&#x0E22;&#x0E01;&#x0E32;&#x0E23;</div>
+<div class="summary-row"><span>&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E1C;&#x0E39;&#x0E49;&#x0E2A;&#x0E48;&#x0E07;</span><span id="sumSenderAddress">...</span></div>
+<div class="summary-row"><span>&#x0E17;&#x0E35;&#x0E48;&#x0E2D;&#x0E22;&#x0E39;&#x0E48;&#x0E1C;&#x0E39;&#x0E49;&#x0E23;&#x0E31;&#x0E1A;</span><span id="sumReceiverAddress">...</span></div>
+<div class="summary-row"><span>&#x0E1B;&#x0E23;&#x0E30;&#x0E40;&#x0E20;&#x0E17;&#x0E1E;&#x0E31;&#x0E2A;&#x0E14;&#x0E38;</span><span id="sumParcelType">...</span></div>
+<div class="summary-row"><span>&#x0E19;&#x0E49;&#x0E33;&#x0E2B;&#x0E19;&#x0E31;&#x0E01;</span><span id="sumParcelWeight">...</span></div>
+<div class="summary-row"><span>&#x0E23;&#x0E30;&#x0E22;&#x0E30;&#x0E17;&#x0E32;&#x0E07;&#x0E1B;&#x0E23;&#x0E30;&#x0E21;&#x0E32;&#x0E13;</span><span id="sumDistance">...</span></div>
+<div class="summary-row"><span>&#x0E2B;&#x0E21;&#x0E32;&#x0E22;&#x0E40;&#x0E2B;&#x0E15;&#x0E38;&#x0E08;&#x0E38;&#x0E14;&#x0E23;&#x0E31;&#x0E1A;</span><span id="sumPickupNote">-</span></div>
+<div class="summary-row"><span>&#x0E2B;&#x0E21;&#x0E32;&#x0E22;&#x0E40;&#x0E2B;&#x0E15;&#x0E38;&#x0E08;&#x0E38;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;</span><span id="sumDropoffNote">-</span></div>
 </div>
 
 <div class="card">
-<div class="section-title">เธเธฒเธฃเธเธณเธฃเธฐเน€เธเธดเธ</div>
-<label>เน€เธฅเธทเธญเธเธงเธดเธเธตเธเธฒเธฃเธเธณเธฃเธฐเน€เธเธดเธ</label>
+<div class="section-title">&#x0E01;&#x0E32;&#x0E23;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;&#x0E40;&#x0E07;&#x0E34;&#x0E19;</div>
+<label>&#x0E40;&#x0E25;&#x0E37;&#x0E2D;&#x0E01;&#x0E27;&#x0E34;&#x0E18;&#x0E35;&#x0E01;&#x0E32;&#x0E23;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;&#x0E40;&#x0E07;&#x0E34;&#x0E19;</label>
 <select id="paymentMethod">
-<option value="cash">เน€เธเธดเธเธชเธ”</option>
-<option value="transfer">เนเธญเธ</option>
+<option value="cash">&#x0E40;&#x0E07;&#x0E34;&#x0E19;&#x0E2A;&#x0E14;</option>
+<option value="transfer">&#x0E42;&#x0E2D;&#x0E19;</option>
 </select>
-<label>เธเธนเนเธเธณเธฃเธฐเน€เธเธดเธ</label>
+<label>&#x0E1C;&#x0E39;&#x0E49;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;&#x0E40;&#x0E07;&#x0E34;&#x0E19;</label>
 <select id="payer">
-<option value="sender">เธเธนเนเธชเนเธ</option>
-<option value="receiver">เธเธนเนเธฃเธฑเธ (เน€เธเธดเธเธชเธ”เน€เธ—เนเธฒเธเธฑเนเธ)</option>
+<option value="sender">&#x0E1C;&#x0E39;&#x0E49;&#x0E2A;&#x0E48;&#x0E07;</option>
+<option value="receiver">&#x0E1C;&#x0E39;&#x0E49;&#x0E23;&#x0E31;&#x0E1A; (&#x0E40;&#x0E07;&#x0E34;&#x0E19;&#x0E2A;&#x0E14;&#x0E40;&#x0E17;&#x0E48;&#x0E32;&#x0E19;&#x0E31;&#x0E49;&#x0E19;)</option>
 </select>
-<label>เธฃเธซเธฑเธชเนเธเธฃเนเธกเธเธฑเธ</label>
-<input id="promoCode" placeholder="เธ–เนเธฒเธกเธต">
+<label>&#x0E23;&#x0E2B;&#x0E31;&#x0E2A;&#x0E42;&#x0E1B;&#x0E23;&#x0E42;&#x0E21;&#x0E0A;&#x0E31;&#x0E19;</label>
+<input id="promoCode" placeholder="&#x0E16;&#x0E49;&#x0E32;&#x0E21;&#x0E35;">
 </div>
 
 <div class="card">
-<div class="section-title">เธชเธฃเธธเธเธฃเธฒเธเธฒ</div>
-<div class="summary-row"><span>เธเนเธฒเธเธฑเธ”เธชเนเธ</span><span id="sumPrice">เธเธณเธเธงเธ“เธเธฒเธเธฃเธฐเธเธ</span></div>
+<div class="section-title">&#x0E2A;&#x0E23;&#x0E38;&#x0E1B;&#x0E23;&#x0E32;&#x0E04;&#x0E32;</div>
+<div class="summary-row"><span>&#x0E04;&#x0E48;&#x0E32;&#x0E08;&#x0E31;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;</span><span id="sumPrice">&#x0E04;&#x0E33;&#x0E19;&#x0E27;&#x0E13;&#x0E08;&#x0E32;&#x0E01;&#x0E23;&#x0E30;&#x0E1A;&#x0E1A;</span></div>
 </div>
 
 <div class="footer">
 <div class="btn-row">
-  <button id="backBtn" class="btn secondary" type="button">เธขเนเธญเธเธเธฅเธฑเธ</button>
-  <button id="confirmBtn" class="btn" type="button">เธขเธทเธเธขเธฑเธเธเธฒเธฃเธชเธฑเนเธเธชเนเธ</button>
+  <button id="backBtn" class="btn secondary" type="button">&#x0E22;&#x0E49;&#x0E2D;&#x0E19;&#x0E01;&#x0E25;&#x0E31;&#x0E1A;</button>
+  <button id="confirmBtn" class="btn" type="button">&#x0E22;&#x0E37;&#x0E19;&#x0E22;&#x0E31;&#x0E19;&#x0E01;&#x0E32;&#x0E23;&#x0E2A;&#x0E31;&#x0E48;&#x0E07;&#x0E2A;&#x0E48;&#x0E07;</button>
 </div>
 </div>
 
 <script>
+const TH = {
+  km: '\u0E01\u0E21.',
+  baht: '\u0E1A\u0E32\u0E17',
+  calcFromSystem: '\u0E04\u0E33\u0E19\u0E27\u0E13\u0E08\u0E32\u0E01\u0E23\u0E30\u0E1A\u0E1A',
+  cashOnlyReceiver: '\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A\u0E0A\u0E33\u0E23\u0E30\u0E44\u0E14\u0E49\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E40\u0E07\u0E34\u0E19\u0E2A\u0E14\u0E40\u0E17\u0E48\u0E32\u0E19\u0E31\u0E49\u0E19',
+  success: '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E2A\u0E48\u0E07\u0E2A\u0E33\u0E40\u0E23\u0E47\u0E08'
+};
+
 const sumSenderAddress = document.getElementById('sumSenderAddress');
 const sumReceiverAddress = document.getElementById('sumReceiverAddress');
 const sumParcelType = document.getElementById('sumParcelType');
 const sumParcelWeight = document.getElementById('sumParcelWeight');
 const sumDistance = document.getElementById('sumDistance');
 const sumPrice = document.getElementById('sumPrice');
+const sumPickupNote = document.getElementById('sumPickupNote');
+const sumDropoffNote = document.getElementById('sumDropoffNote');
 const backBtn = document.getElementById('backBtn');
 const confirmBtn = document.getElementById('confirmBtn');
 const paymentMethodField = document.getElementById('paymentMethod');
@@ -117,8 +134,10 @@ function loadSummary(){
   sumReceiverAddress.innerHTML = escapeHtml(step1.dropoffAddress || step2.receiverAddress);
   sumParcelType.innerHTML = escapeHtml(step2.parcelType);
   sumParcelWeight.innerHTML = escapeHtml(step2.parcelWeight);
-  sumDistance.innerHTML = step1.distanceKm ? `${Number(step1.distanceKm).toFixed(1)} เธเธก.` : '...';
-  sumPrice.innerHTML = step1.priceEstimate ? `${Number(step1.priceEstimate).toLocaleString('th-TH')} เธเธฒเธ—` : 'เธเธณเธเธงเธ“เธเธฒเธเธฃเธฐเธเธ';
+  sumPickupNote.innerHTML = escapeHtml(step1.pickupNote || '-');
+  sumDropoffNote.innerHTML = escapeHtml(step1.dropoffNote || '-');
+  sumDistance.innerHTML = step1.distanceKm ? `${Number(step1.distanceKm).toFixed(1)} ${TH.km}` : '...';
+  sumPrice.innerHTML = step1.priceEstimate ? `${Number(step1.priceEstimate).toLocaleString('th-TH')} ${TH.baht}` : TH.calcFromSystem;
 
   if(step3.payment_method) paymentMethodField.value = step3.payment_method;
   if(step3.payer) payerField.value = step3.payer;
@@ -139,7 +158,7 @@ confirmBtn.addEventListener('click', () => {
   const promo_code = promoCodeField.value.trim();
 
   if(payment_method === 'transfer' && payer === 'receiver'){
-    alert('เธเธนเนเธฃเธฑเธเธเธณเธฃเธฐเนเธ”เนเน€เธเธเธฒเธฐเน€เธเธดเธเธชเธ”เน€เธ—เนเธฒเธเธฑเนเธ');
+    alert(TH.cashOnlyReceiver);
     return;
   }
 
@@ -151,6 +170,8 @@ confirmBtn.addEventListener('click', () => {
     dropoff_address: step1.dropoffAddress || step2.receiverAddress || '',
     distance_km: step1.distanceKm || 0,
     delivery_fee: step1.priceEstimate || 0,
+    pickup_note: step1.pickupNote || '',
+    dropoff_note: step1.dropoffNote || '',
     sender_name: step2.senderName || '',
     sender_phone: step2.senderPhone || '',
     sender_note: step2.senderNote || '',
@@ -166,7 +187,7 @@ confirmBtn.addEventListener('click', () => {
     created_from: 'parcel-prototype'
   }));
 
-  alert('เธเธฑเธเธ—เธถเธเธเธณเธชเธฑเนเธเธชเนเธเธชเธณเน€เธฃเนเธ');
+  alert(TH.success);
   localStorage.removeItem('parcel_step1');
   localStorage.removeItem('parcel_step2');
   localStorage.removeItem('parcel_step3');

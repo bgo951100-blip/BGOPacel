@@ -9,7 +9,7 @@
 :root{--primary:#0b3c6d;--secondary:#1e88e5;--bg:#f4f7fb;--card:#ffffff;--muted:#6b7280}
 *{box-sizing:border-box}
 html,body{height:100%}
-body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111}
+body{margin:0;font-family:'Prompt',sans-serif;background:var(--bg);color:#111;padding-bottom:110px}
 header{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:22px 16px 28px;border-bottom-left-radius:22px;border-bottom-right-radius:22px}
 h1{margin:0;font-size:18px}
 p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
@@ -18,7 +18,7 @@ label{font-size:13px;color:#374151;margin-top:12px;display:block}
 input,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;border:1px solid #d1d5db;font-family:'Prompt',sans-serif}
 textarea{resize:vertical;min-height:84px}
 .section-title{font-weight:600;margin-bottom:6px}
-.footer{position:fixed;bottom:0;left:0;right:0;padding:14px 16px;background:#fff;border-top:1px solid #e5e7eb}
+.footer{margin:0 16px 24px;padding:0;background:transparent;border-top:0}
 .btn-row{display:flex;gap:10px}
 .btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px;border-radius:14px;text-align:center;font-weight:500;border:none;width:100%;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif}
 .btn.secondary{background:#eef2f7;color:#0b3c6d}
@@ -41,7 +41,7 @@ textarea{resize:vertical;min-height:84px}
 .map-hint.show{display:block}
 .map-hint .btn{width:100%;box-shadow:0 14px 30px rgba(30,136,229,.35)}
 body.map-open{overflow:hidden}
-@media (max-width:600px){input,textarea,.btn{font-size:16px}.map-preview{height:160px}.map-modal{width:calc(100vw - 18px)}.map-modal-card{border-radius:20px;padding:10px}.map-live{height:min(68dvh,420px);border-radius:16px}.map-toolbar{top:18px;left:18px;right:18px}.map-hint{left:18px;right:18px;bottom:18px}}
+@media (max-width:600px){body{padding-bottom:120px}input,textarea,.btn{font-size:16px}.map-preview{height:160px}.map-modal{width:calc(100vw - 18px)}.map-modal-card{border-radius:20px;padding:10px}.map-live{height:min(68dvh,420px);border-radius:16px}.map-toolbar{top:18px;left:18px;right:18px}.map-hint{left:18px;right:18px;bottom:18px}}
 </style>
 </head>
 <body>
