@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ส่งพัสดุ - ข้อมูลผู้ส่งและผู้รับ</title>
+<title>เธชเนเธเธเธฑเธชเธ”เธธ - เธเนเธญเธกเธนเธฅเธเธนเนเธชเนเธเนเธฅเธฐเธเธนเนเธฃเธฑเธ</title>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--primary:#0b3c6d;--secondary:#1e88e5;--bg:#f4f7fb;--card:#ffffff}
@@ -20,57 +20,57 @@ input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;
 </head>
 <body>
 <header>
-<h1>รายละเอียดการจัดส่ง</h1>
-<p class="sub">กรอกข้อมูลผู้ส่ง ผู้รับ และพัสดุ</p>
+<h1>เธฃเธฒเธขเธฅเธฐเน€เธญเธตเธขเธ”เธเธฒเธฃเธเธฑเธ”เธชเนเธ</h1>
+<p class="sub">เธเธฃเธญเธเธเนเธญเธกเธนเธฅเธเธนเนเธชเนเธ เธเธนเนเธฃเธฑเธ เนเธฅเธฐเธเธฑเธชเธ”เธธ</p>
 </header>
 
 <div class="card">
-<div class="section-title">ผู้ส่ง</div>
-<label>ที่อยู่</label>
-<input id="senderAddress" placeholder="แสดงที่อยู่จากแผนที่">
-<label>ชื่อ</label>
-<input id="senderName" placeholder="ชื่อผู้ส่ง">
-<label>เบอร์โทร</label>
-<input id="senderPhone" inputmode="numeric" placeholder="เบอร์โทรศัพท์">
-<label>หมายเหตุถึงไรเดอร์</label>
-<textarea id="senderNote" placeholder="ถ้ามี"></textarea>
+<div class="section-title">เธเธนเนเธชเนเธ</div>
+<label>เธ—เธตเนเธญเธขเธนเน</label>
+<input id="senderAddress" placeholder="เนเธชเธ”เธเธ—เธตเนเธญเธขเธนเนเธเธฒเธเนเธเธเธ—เธตเน">
+<label>เธเธทเนเธญ</label>
+<input id="senderName" placeholder="เธเธทเนเธญเธเธนเนเธชเนเธ">
+<label>เน€เธเธญเธฃเนเนเธ—เธฃ</label>
+<input id="senderPhone" inputmode="numeric" placeholder="เน€เธเธญเธฃเนเนเธ—เธฃเธจเธฑเธเธ—เน">
+<label>เธซเธกเธฒเธขเน€เธซเธ•เธธเธ–เธถเธเนเธฃเน€เธ”เธญเธฃเน</label>
+<textarea id="senderNote" placeholder="เธ–เนเธฒเธกเธต"></textarea>
 </div>
 
 <div class="card">
-<div class="section-title">ผู้รับ</div>
-<label>ที่อยู่</label>
-<input id="receiverAddress" placeholder="แสดงที่อยู่จากแผนที่">
-<label>ชื่อ</label>
-<input id="receiverName" placeholder="ชื่อผู้รับ">
-<label>เบอร์โทร</label>
-<input id="receiverPhone" inputmode="numeric" placeholder="เบอร์โทรศัพท์">
-<label>หมายเหตุถึงไรเดอร์</label>
-<textarea id="receiverNote" placeholder="ถ้ามี"></textarea>
-<label>ประเภทพัสดุ</label>
+<div class="section-title">เธเธนเนเธฃเธฑเธ</div>
+<label>เธ—เธตเนเธญเธขเธนเน</label>
+<input id="receiverAddress" placeholder="เนเธชเธ”เธเธ—เธตเนเธญเธขเธนเนเธเธฒเธเนเธเธเธ—เธตเน">
+<label>เธเธทเนเธญ</label>
+<input id="receiverName" placeholder="เธเธทเนเธญเธเธนเนเธฃเธฑเธ">
+<label>เน€เธเธญเธฃเนเนเธ—เธฃ</label>
+<input id="receiverPhone" inputmode="numeric" placeholder="เน€เธเธญเธฃเนเนเธ—เธฃเธจเธฑเธเธ—เน">
+<label>เธซเธกเธฒเธขเน€เธซเธ•เธธเธ–เธถเธเนเธฃเน€เธ”เธญเธฃเน</label>
+<textarea id="receiverNote" placeholder="เธ–เนเธฒเธกเธต"></textarea>
+<label>เธเธฃเธฐเน€เธ เธ—เธเธฑเธชเธ”เธธ</label>
 <select id="parcelType">
-<option>สินค้าแฟชั่น</option>
-<option>อาหารและเครื่องดื่ม</option>
-<option>เครื่องใช้ไฟฟ้า</option>
-<option>เอกสาร</option>
-<option>ยา</option>
-<option>อื่น ๆ</option>
+<option>เธชเธดเธเธเนเธฒเนเธเธเธฑเนเธ</option>
+<option>เธญเธฒเธซเธฒเธฃเนเธฅเธฐเน€เธเธฃเธทเนเธญเธเธ”เธทเนเธก</option>
+<option>เน€เธเธฃเธทเนเธญเธเนเธเนเนเธเธเนเธฒ</option>
+<option>เน€เธญเธเธชเธฒเธฃ</option>
+<option>เธขเธฒ</option>
+<option>เธญเธทเนเธ เน</option>
 </select>
 </div>
 
 <div class="card">
-<div class="section-title">น้ำหนักทั้งหมด</div>
+<div class="section-title">เธเนเธณเธซเธเธฑเธเธ—เธฑเนเธเธซเธกเธ”</div>
 <select id="parcelWeight">
-<option>น้อยกว่า 1 กก.</option>
-<option>1 - 5 กก.</option>
-<option>6 - 10 กก.</option>
-<option>11 - 15 กก.</option>
+<option>เธเนเธญเธขเธเธงเนเธฒ 1 เธเธ.</option>
+<option>1 - 5 เธเธ.</option>
+<option>6 - 10 เธเธ.</option>
+<option>11 - 15 เธเธ.</option>
 </select>
 </div>
 
 <div class="footer">
 <div class="btn-row">
-  <button id="backBtn" class="btn secondary" type="button">ย้อนกลับ</button>
-  <button id="nextBtn" class="btn" type="button">ถัดไป</button>
+  <button id="backBtn" class="btn secondary" type="button">เธขเนเธญเธเธเธฅเธฑเธ</button>
+  <button id="nextBtn" class="btn" type="button">เธ–เธฑเธ”เนเธ</button>
 </div>
 </div>
 
@@ -97,7 +97,7 @@ function normalizePhone(value){
 function sanitizeAddress(value){
   const cleaned = (value || '')
     .replace(/^[A-Z0-9+]{4,}\s*/i, '')
-    .replace(/\s*ประเทศไทย$/, '')
+    .replace(/\s*เธเธฃเธฐเน€เธ—เธจเนเธ—เธข$/, '')
     .replace(/\s+/g, ' ')
     .trim();
   return cleaned;
@@ -135,7 +135,7 @@ nextBtn.addEventListener('click', () => {
   }
 
   if(senderPhone.length < 9 || senderPhone.length > 10 || receiverPhone.length < 9 || receiverPhone.length > 10){
-    alert('กรุณากรอกเบอร์โทรให้ถูกต้อง');
+    alert('เธเธฃเธธเธ“เธฒเธเธฃเธญเธเน€เธเธญเธฃเนเนเธ—เธฃเนเธซเนเธ–เธนเธเธ•เนเธญเธ');
     return;
   }
 
@@ -163,10 +163,10 @@ try{
       fields[key].value = key === 'senderAddress' || key === 'receiverAddress' ? sanitizeAddress(saved[key]) : saved[key];
     }
   });
-  if(!fields.senderAddress.value && step1.pickupAddress){
+  if(step1.pickupAddress){
     fields.senderAddress.value = sanitizeAddress(step1.pickupAddress);
   }
-  if(!fields.receiverAddress.value && step1.dropoffAddress){
+  if(step1.dropoffAddress){
     fields.receiverAddress.value = sanitizeAddress(step1.dropoffAddress);
   }
 }catch(e){}
