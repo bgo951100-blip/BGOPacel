@@ -105,7 +105,9 @@ const TH = {
   confirmPickup: '\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E08\u0E38\u0E14\u0E23\u0E31\u0E1A\u0E1E\u0E31\u0E2A\u0E14\u0E38',
   confirmDropoff: '\u0E22\u0E37\u0E19\u0E22\u0E31\u0E19\u0E08\u0E38\u0E14\u0E2A\u0E48\u0E07\u0E1E\u0E31\u0E2A\u0E14\u0E38',
   notFound: '\u0E44\u0E21\u0E48\u0E1E\u0E1A\u0E17\u0E35\u0E48\u0E2D\u0E22\u0E39\u0E48',
-  currentLocationFailed: '\u0E44\u0E21\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E14\u0E36\u0E07\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19\u0E44\u0E14\u0E49'
+  currentLocationFailed: '\u0E44\u0E21\u0E48\u0E2A\u0E32\u0E21\u0E32\u0E23\u0E16\u0E14\u0E36\u0E07\u0E15\u0E33\u0E41\u0E2B\u0E19\u0E48\u0E07\u0E1B\u0E31\u0E08\u0E08\u0E38\u0E1A\u0E31\u0E19\u0E44\u0E14\u0E49',
+  routeReady: '\u0E1E\u0E23\u0E49\u0E2D\u0E21\u0E44\u0E1B\u0E15\u0E48\u0E2D',
+  routeEstimating: '\u0E01\u0E33\u0E25\u0E31\u0E07\u0E04\u0E33\u0E19\u0E27\u0E13\u0E23\u0E30\u0E22\u0E30\u0E17\u0E32\u0E07\u0E41\u0E25\u0E30\u0E23\u0E32\u0E04\u0E32'
 };
 
 const pickupBtn = document.getElementById('pickupBtn');
@@ -145,6 +147,26 @@ const PRICE_PER_KM = 8;
 const DEFAULT_CENTER = { lat: 5.77434, lng: 101.07231 };
 const DEFAULT_PLACE = TH.defaultPlace;
 
+function toRadians(value){
+  return value * Math.PI / 180;
+}
+
+function getStraightDistanceKm(origin, destination){
+  const lat1 = typeof origin.lat === 'function' ? origin.lat() : origin.lat;
+  const lng1 = typeof origin.lng === 'function' ? origin.lng() : origin.lng;
+  const lat2 = typeof destination.lat === 'function' ? destination.lat() : destination.lat;
+  const lng2 = typeof destination.lng === 'function' ? destination.lng() : destination.lng;
+  const earthRadiusKm = 6371;
+  const dLat = toRadians(lat2 - lat1);
+  const dLng = toRadians(lng2 - lng1);
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.cos(toRadians(lat1)) * Math.cos(toRadians(lat2)) *
+    Math.sin(dLng / 2) * Math.sin(dLng / 2);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  return earthRadiusKm * c;
+}
+
 function updateEstimate(){
   if(distanceKm === null){
     distanceText.textContent = '-';
@@ -175,24 +197,31 @@ function updateStorage(){
 function calcRoute(){
   if(!pickupMarker || !dropoffMarker){
     distanceKm = null;
+    activeHint.textContent = activeField === 'pickup' ? TH.activePickup : TH.activeDropoff;
     updateEstimate();
     updateStorage();
     return;
   }
+
+  activeHint.textContent = TH.routeEstimating;
+  distanceKm = getStraightDistanceKm(pickupMarker.getPosition(), dropoffMarker.getPosition());
+  updateEstimate();
+  updateStorage();
+
   directionsService.route({
     origin: pickupMarker.getPosition(),
     destination: dropoffMarker.getPosition(),
     travelMode: google.maps.TravelMode.DRIVING
   }, (result, status) => {
     if(status !== 'OK' || !result.routes || !result.routes[0]){
-      distanceKm = null;
-      updateEstimate();
+      activeHint.textContent = TH.routeReady;
       updateStorage();
       return;
     }
     directionsRenderer.setDirections(result);
     const leg = result.routes[0].legs[0];
     distanceKm = leg.distance.value / 1000;
+    activeHint.textContent = TH.routeReady;
     updateEstimate();
     updateStorage();
   });
@@ -243,11 +272,62 @@ function setActiveField(type){
 function reverseGeocode(latLng, cb){
   geocoder.geocode({ location: latLng }, (results, status) => {
     if(status === 'OK' && results && results[0]){
-      cb(results[0].formatted_address);
+      cb(getDisplayAddress(results));
       return;
     }
     cb(TH.notFound);
   });
+}
+
+function getAddressComponent(components, type){
+  const match = (components || []).find((component) => component.types && component.types.includes(type));
+  return match ? match.long_name : '';
+}
+
+function joinAddressParts(parts){
+  return parts.filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+}
+
+function buildDisplayAddress(result){
+  const components = result && result.address_components ? result.address_components : [];
+  const streetNumber = getAddressComponent(components, 'street_number');
+  const route = getAddressComponent(components, 'route');
+  const sublocality =
+    getAddressComponent(components, 'sublocality_level_1') ||
+    getAddressComponent(components, 'sublocality') ||
+    getAddressComponent(components, 'neighborhood');
+  const locality =
+    getAddressComponent(components, 'locality') ||
+    getAddressComponent(components, 'postal_town');
+  const district =
+    getAddressComponent(components, 'administrative_area_level_2') ||
+    getAddressComponent(components, 'administrative_area_level_3');
+  const province = getAddressComponent(components, 'administrative_area_level_1');
+  const postalCode = getAddressComponent(components, 'postal_code');
+
+  const line1 = joinAddressParts([streetNumber, route]);
+  const line2 = sublocality ? '\u0E15.' + sublocality : '';
+  const line3 = locality ? '\u0E2D.' + locality : '';
+  const line4 = province || district || '';
+  const line5 = postalCode || '';
+  const address = joinAddressParts([line1, line2, line3, line4, line5]);
+
+  if(address){
+    return address;
+  }
+
+  return result && result.formatted_address
+    ? result.formatted_address.replace(/^[A-Z0-9+]{4,}\s*/i, '').replace(/\s*\u0E1B\u0E23\u0E30\u0E40\u0E17\u0E28\u0E44\u0E17\u0E22$/, '').trim()
+    : TH.notFound;
+}
+
+function getDisplayAddress(results){
+  const preferred = (results || []).find((result) => {
+    const formatted = result && result.formatted_address ? result.formatted_address : '';
+    return formatted && !/^[A-Z0-9+]{4,}\s/i.test(formatted);
+  }) || results[0];
+
+  return buildDisplayAddress(preferred);
 }
 
 function bindAutocomplete(input, type){
@@ -258,7 +338,7 @@ function bindAutocomplete(input, type){
     if(!place.geometry) return;
     setActiveField(type);
     setMarker(place.geometry.location, type);
-    const address = place.formatted_address || input.value.trim();
+    const address = buildDisplayAddress(place) || input.value.trim();
     if(type === 'pickup'){
       pickupText.textContent = address;
       pickupSearchField.value = address;
@@ -274,6 +354,11 @@ function bindAutocomplete(input, type){
 function syncButton(){
   const ok = pickupText.textContent.trim() !== '-' && dropoffText.textContent.trim() !== '-';
   nextBtn.disabled = !ok;
+  if(ok && distanceKm !== null){
+    activeHint.textContent = TH.routeReady;
+  } else if(!ok) {
+    activeHint.textContent = activeField === 'pickup' ? TH.activePickup : TH.activeDropoff;
+  }
 }
 
 function openMap(type){
@@ -348,7 +433,7 @@ window.initMap = function initMap(){
     if(!place.geometry) return;
     const target = activeField || 'pickup';
     setMarker(place.geometry.location, target);
-    const address = place.formatted_address || mapSearch.value.trim();
+    const address = buildDisplayAddress(place) || mapSearch.value.trim();
     if(target === 'pickup'){
       pickupText.textContent = address;
       pickupSearchField.value = address;
@@ -408,7 +493,7 @@ window.initMap = function initMap(){
         const loc = results[0].geometry.location;
         setActiveField('pickup');
         setMarker(loc, 'pickup');
-        pickupText.textContent = results[0].formatted_address || pickupText.textContent;
+        pickupText.textContent = buildDisplayAddress(results[0]) || pickupText.textContent;
         pickupSearchField.value = pickupText.textContent;
         updateStorage();
         syncButton();
