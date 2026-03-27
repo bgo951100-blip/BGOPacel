@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parcel Step 3</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#0b3c6d;
+  --secondary:#1e88e5;
+  --bg:#f4f7fb;
+  --card:#ffffff;
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Prompt',sans-serif;
+  background:var(--bg);
+  color:#111;
+  padding-bottom:100px; /* กัน footer บัง */
+}
+header{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:22px 16px 28px;
+  border-bottom-left-radius:22px;
+  border-bottom-right-radius:22px;
+}
+h1{margin:0;font-size:18px}
+p.sub{margin:4px 0 0;font-size:13px;opacity:.9}
+.card{
+  background:var(--card);
+  margin:16px;
+  padding:16px;
+  border-radius:18px;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+label{font-size:13px;color:#374151;margin-top:12px;display:block}
+input,select,textarea{
+  width:100%;
+  padding:12px;
+  margin-top:6px;
+  border-radius:12px;
+  border:1px solid #d1d5db;
+  font-family:'Prompt',sans-serif;
+}
+.section-title{
+  font-weight:600;
+  margin-bottom:6px;
+}
+.footer{
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
+  padding:14px 16px;
+  background:#fff;
+  border-top:1px solid #e5e7eb;
+}
+.btn-row{
+  display:flex;
+  gap:10px;
+}
+.btn{
+  background:linear-gradient(135deg,var(--primary),var(--secondary));
+  color:#fff;
+  padding:14px;
+  border-radius:14px;
+  text-align:center;
+  font-weight:500;
+  border:none;
+  width:100%;
+  cursor:pointer;
+  font-size:15px;
+  font-family:'Prompt',sans-serif;
+}
+.btn.secondary{
+  background:#eef2f7;
+  color:#0b3c6d;
+}
+.summary-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:6px;
+  font-size:14px;
+}
+</style>
+
+</head>
+<body>
+<header>
+<h1>สรุปและชำระเงิน</h1>
+<p class="sub">ตรวจสอบข้อมูลก่อนยืนยัน</p>
+</header>
+
+<div class="card">
+<div class="section-title">สรุปรายการ</div>
+<div class="summary-row"><span>ที่อยู่ผู้ส่ง</span><span id="sumSenderAddress">...</span></div>
+<div class="summary-row"><span>ที่อยู่ผู้รับ</span><span id="sumReceiverAddress">...</span></div>
+<div class="summary-row"><span>ประเภทพัสดุ</span><span id="sumParcelType">...</span></div>
+<div class="summary-row"><span>น้ำหนัก</span><span id="sumParcelWeight">...</span></div>
+<div class="summary-row"><span>ระยะทางประมาณ</span><span id="sumDistance">...</span></div>
+</div>
+
+<div class="card">
+<div class="section-title">การชำระเงิน</div>
+<label>เลือกวิธีการชำระเงิน</label>
+<select>
+<option>เงินสด</option>
+<option>โอน</option>
+</select>
+<label>ผู้ชำระเงิน</label>
+<select>
+<option>ผู้ส่ง</option>
+<option>ผู้รับ (เงินสดเท่านั้น)</option>
+</select>
+<label>รหัสโปรโมชั่น</label>
+<input>
+</div>
+
+<div class="card">
+<div class="section-title">สรุปราคา</div>
+<div class="summary-row"><span>ค่าจัดส่ง</span><span id="sumPrice">คำนวณจากระบบ</span></div>
+</div>
+
+<div class="footer">
+<div class="btn-row">
+  <button id="backBtn" class="btn secondary" type="button">ย้อนกลับ</button>
+  <button id="confirmBtn" class="btn" type="button">ยืนยันการสั่งส่ง</button>
+</div>
+</div>
+
+<script>
+const sumSenderAddress = document.getElementById('sumSenderAddress');
+const sumReceiverAddress = document.getElementById('sumReceiverAddress');
+const sumParcelType = document.getElementById('sumParcelType');
+const sumParcelWeight = document.getElementById('sumParcelWeight');
+const sumDistance = document.getElementById('sumDistance');
+const sumPrice = document.getElementById('sumPrice');
+const backBtn = document.getElementById('backBtn');
+const confirmBtn = document.getElementById('confirmBtn');
+
+function loadSummary(){
+  let step2 = {};
+  let step1 = {};
+  try{
+    step2 = JSON.parse(localStorage.getItem('parcel_step2') || '{}');
+  }catch(e){}
+  try{
+    step1 = JSON.parse(localStorage.getItem('parcel_step1') || '{}');
+  }catch(e){}
+  sumSenderAddress.textContent = step2.senderAddress || '...';
+  sumReceiverAddress.textContent = step2.receiverAddress || '...';
+  sumParcelType.textContent = step2.parcelType || '...';
+  sumParcelWeight.textContent = step2.parcelWeight || '...';
+  if(step1.pickupAddress){
+    sumSenderAddress.textContent = step1.pickupAddress;
+  }
+  if(step1.dropoffAddress){
+    sumReceiverAddress.textContent = step1.dropoffAddress;
+  }
+  if(step1.distanceKm){
+    sumDistance.textContent = `${Number(step1.distanceKm).toFixed(1)} กม.`;
+  }else{
+    sumDistance.textContent = '...';
+  }
+  if(step1.priceEstimate){
+    sumPrice.textContent = `${Number(step1.priceEstimate).toLocaleString('th-TH')} บาท`;
+  }else{
+    sumPrice.textContent = 'คำนวณจากระบบ';
+  }
+}
+
+backBtn.addEventListener('click', () => {
+  window.location.href = 'indexpacel2.html';
+});
+
+confirmBtn.addEventListener('click', () => {
+  // ปลายทางจริงๆ ควรส่งไป backend
+  alert('บันทึกคำสั่งส่งสำเร็จ');
+  localStorage.removeItem('parcel_step1');
+  localStorage.removeItem('parcel_step2');
+});
+
+loadSummary();
+</script>
+</body>
+</html>

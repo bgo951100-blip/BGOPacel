@@ -1,2 +1,0 @@
-# BGOPacel
-BGO Delivery - Parcel
