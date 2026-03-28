@@ -32,11 +32,11 @@ textarea{resize:vertical;min-height:84px}
 .map-modal{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);width:min(calc(100vw - 24px),640px);display:none;z-index:999}
 .map-modal.show{display:block}
 .map-modal-card{position:relative;background:#fff;border-radius:24px;box-shadow:0 24px 60px rgba(15,23,42,.35);padding:12px}
-.map-live{height:min(72dvh,520px);border-radius:18px;overflow:hidden;background:#e5e7eb}
-.map-toolbar{position:absolute;top:24px;left:24px;right:24px;display:none;gap:8px;z-index:1000}
+.map-live{position:relative;z-index:999;height:min(72dvh,520px);border-radius:18px;overflow:hidden;background:#e5e7eb}
+.map-toolbar{position:absolute;top:24px;left:24px;right:24px;display:none;gap:8px;z-index:1002;pointer-events:auto}
 .map-toolbar.show{display:flex}
-.map-toolbar input{flex:1;margin:0;background:#fff}
-.map-hint{position:absolute;left:24px;right:24px;bottom:24px;display:none;z-index:1000}
+.map-toolbar input{flex:1;margin:0;background:#fff;position:relative;z-index:1003}
+.map-hint{position:absolute;left:24px;right:24px;bottom:24px;display:none;z-index:1002;pointer-events:auto}
 .map-hint.show{display:block}
 .map-hint .btn{width:100%;box-shadow:0 14px 30px rgba(30,136,229,.35)}
 body.map-open{overflow:hidden}
@@ -381,7 +381,11 @@ function openMap(type){
       map.setCenter(DEFAULT_CENTER);
       map.setZoom(13);
     }
-  }, 80);
+    mapSearch.focus();
+    if(mapSearch.value){
+      mapSearch.select();
+    }
+  }, 120);
 }
 
 function closeMap(){
