@@ -22,7 +22,7 @@ textarea{resize:vertical;min-height:84px}
 .btn-row{display:flex;gap:10px;flex-wrap:wrap}
 .btn{background:linear-gradient(135deg,var(--primary),var(--secondary));color:#fff;padding:14px;border-radius:14px;text-align:center;font-weight:500;border:none;width:100%;cursor:pointer;font-size:15px;font-family:'Prompt',sans-serif}
 .btn.secondary{background:#eef2f7;color:#0b3c6d}
-.btn.inline{width:auto;padding:10px 14px;font-size:14px}
+.btn.inline{width:auto;flex:0 0 auto;padding:10px 14px;font-size:14px;white-space:nowrap}
 .btn:disabled{opacity:.6;cursor:not-allowed}
 .summary-row{display:flex;justify-content:space-between;margin-top:6px;font-size:14px;gap:12px}
 .summary-row span:last-child{text-align:right;word-break:break-word;max-width:58%}
@@ -35,12 +35,12 @@ textarea{resize:vertical;min-height:84px}
 .map-live{position:relative;z-index:999;height:min(72dvh,520px);border-radius:18px;overflow:hidden;background:#e5e7eb}
 .map-toolbar{position:absolute;top:24px;left:24px;right:24px;display:none;gap:8px;z-index:1002;pointer-events:auto}
 .map-toolbar.show{display:flex}
-.map-toolbar input{flex:1;margin:0;background:#fff;position:relative;z-index:1003}
+.map-toolbar input{flex:1 1 auto;min-width:0;margin:0;background:#fff;position:relative;z-index:1003}
 .map-hint{position:absolute;left:24px;right:24px;bottom:24px;display:none;z-index:1002;pointer-events:auto}
 .map-hint.show{display:block}
 .map-hint .btn{width:100%;box-shadow:0 14px 30px rgba(30,136,229,.35)}
 body.map-open{overflow:hidden}
-@media (max-width:600px){input,textarea,.btn{font-size:16px}.map-modal{width:calc(100vw - 18px)}.map-modal-card{border-radius:20px;padding:10px}.map-live{height:min(68dvh,420px);border-radius:16px}.map-toolbar{top:18px;left:18px;right:18px}.map-hint{left:18px;right:18px;bottom:18px}.btn.inline{width:100%}}
+@media (max-width:600px){input,textarea,.btn{font-size:16px}.map-modal{width:calc(100vw - 18px)}.map-modal-card{border-radius:20px;padding:10px}.map-live{height:min(68dvh,420px);border-radius:16px}.map-toolbar{top:18px;left:18px;right:18px}.map-hint{left:18px;right:18px;bottom:18px}.btn.inline{width:auto;flex:0 0 auto}}
 </style>
 </head>
 <body>
