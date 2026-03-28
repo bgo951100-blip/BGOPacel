@@ -321,12 +321,30 @@ function buildDisplayAddress(result){
     : TH.notFound;
 }
 
+function isPoiResult(result){
+  const types = result && result.types ? result.types : [];
+  return ['point_of_interest','establishment','premise','subpremise','store','restaurant','lodging','shopping_mall'].some((t) => types.includes(t));
+}
+function getPlaceLabel(result){
+  if(!result) return '';
+  const name = result.name ? String(result.name).trim() : '';
+  if(name) return name;
+  const formatted = result.formatted_address ? String(result.formatted_address).trim() : '';
+  if(!formatted) return '';
+  const firstPart = formatted.split(',')[0].trim();
+  if(!firstPart || /^[A-Z0-9+]{4,}\s/i.test(firstPart)) return '';
+  return firstPart;
+}
 function getDisplayAddress(results){
-  const preferred = (results || []).find((result) => {
+  const list = results || [];
+  const poi = list.find((result) => isPoiResult(result) && getPlaceLabel(result));
+  if(poi){
+    return getPlaceLabel(poi);
+  }
+  const preferred = list.find((result) => {
     const formatted = result && result.formatted_address ? result.formatted_address : '';
     return formatted && !/^[A-Z0-9+]{4,}\s/i.test(formatted);
-  }) || results[0];
-
+  }) || list[0];
   return buildDisplayAddress(preferred);
 }
 
@@ -338,7 +356,7 @@ function bindAutocomplete(input, type){
     if(!place.geometry) return;
     setActiveField(type);
     setMarker(place.geometry.location, type);
-    const address = buildDisplayAddress(place) || input.value.trim();
+    const address = (place.name && place.name.trim()) || buildDisplayAddress(place) || input.value.trim();
     if(type === 'pickup'){
       pickupText.textContent = address;
       pickupSearchField.value = address;
@@ -437,7 +455,7 @@ window.initMap = function initMap(){
     if(!place.geometry) return;
     const target = activeField || 'pickup';
     setMarker(place.geometry.location, target);
-    const address = buildDisplayAddress(place) || mapSearch.value.trim();
+    const address = (place.name && place.name.trim()) || buildDisplayAddress(place) || mapSearch.value.trim();
     if(target === 'pickup'){
       pickupText.textContent = address;
       pickupSearchField.value = address;
