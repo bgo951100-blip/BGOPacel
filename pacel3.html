@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="th">
 <head>
 <meta charset="UTF-8">
@@ -44,15 +44,9 @@ input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;
 <div class="card">
 <div class="section-title">&#x0E01;&#x0E32;&#x0E23;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;&#x0E40;&#x0E07;&#x0E34;&#x0E19;</div>
 <label>&#x0E40;&#x0E25;&#x0E37;&#x0E2D;&#x0E01;&#x0E27;&#x0E34;&#x0E18;&#x0E35;&#x0E01;&#x0E32;&#x0E23;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;&#x0E40;&#x0E07;&#x0E34;&#x0E19;</label>
-<select id="paymentMethod">
-<option value="cash">&#x0E40;&#x0E07;&#x0E34;&#x0E19;&#x0E2A;&#x0E14;</option>
-<option value="transfer">&#x0E42;&#x0E2D;&#x0E19;</option>
-</select>
+<select id="paymentMethod"><option value="cash">&#x0E40;&#x0E07;&#x0E34;&#x0E19;&#x0E2A;&#x0E14;</option><option value="transfer">&#x0E42;&#x0E2D;&#x0E19;</option></select>
 <label>&#x0E1C;&#x0E39;&#x0E49;&#x0E0A;&#x0E33;&#x0E23;&#x0E30;&#x0E40;&#x0E07;&#x0E34;&#x0E19;</label>
-<select id="payer">
-<option value="sender">&#x0E1C;&#x0E39;&#x0E49;&#x0E2A;&#x0E48;&#x0E07;</option>
-<option value="receiver">&#x0E1C;&#x0E39;&#x0E49;&#x0E23;&#x0E31;&#x0E1A; (&#x0E40;&#x0E07;&#x0E34;&#x0E19;&#x0E2A;&#x0E14;&#x0E40;&#x0E17;&#x0E48;&#x0E32;&#x0E19;&#x0E31;&#x0E49;&#x0E19;)</option>
-</select>
+<select id="payer"><option value="sender">&#x0E1C;&#x0E39;&#x0E49;&#x0E2A;&#x0E48;&#x0E07;</option><option value="receiver">&#x0E1C;&#x0E39;&#x0E49;&#x0E23;&#x0E31;&#x0E1A; (&#x0E40;&#x0E07;&#x0E34;&#x0E19;&#x0E2A;&#x0E14;&#x0E40;&#x0E17;&#x0E48;&#x0E32;&#x0E19;&#x0E31;&#x0E49;&#x0E19;)</option></select>
 <label>&#x0E23;&#x0E2B;&#x0E31;&#x0E2A;&#x0E42;&#x0E1B;&#x0E23;&#x0E42;&#x0E21;&#x0E0A;&#x0E31;&#x0E19;</label>
 <input id="promoCode" placeholder="&#x0E16;&#x0E49;&#x0E32;&#x0E21;&#x0E35;">
 </div>
@@ -62,12 +56,7 @@ input,select,textarea{width:100%;padding:12px;margin-top:6px;border-radius:12px;
 <div class="summary-row"><span>&#x0E04;&#x0E48;&#x0E32;&#x0E08;&#x0E31;&#x0E14;&#x0E2A;&#x0E48;&#x0E07;</span><span id="sumPrice">&#x0E04;&#x0E33;&#x0E19;&#x0E27;&#x0E13;&#x0E08;&#x0E32;&#x0E01;&#x0E23;&#x0E30;&#x0E1A;&#x0E1A;</span></div>
 </div>
 
-<div class="footer">
-<div class="btn-row">
-  <button id="backBtn" class="btn secondary" type="button">&#x0E22;&#x0E49;&#x0E2D;&#x0E19;&#x0E01;&#x0E25;&#x0E31;&#x0E1A;</button>
-  <button id="confirmBtn" class="btn" type="button">&#x0E22;&#x0E37;&#x0E19;&#x0E22;&#x0E31;&#x0E19;&#x0E01;&#x0E32;&#x0E23;&#x0E2A;&#x0E31;&#x0E48;&#x0E07;&#x0E2A;&#x0E48;&#x0E07;</button>
-</div>
-</div>
+<div class="footer"><div class="btn-row"><button id="backBtn" class="btn secondary" type="button">&#x0E22;&#x0E49;&#x0E2D;&#x0E19;&#x0E01;&#x0E25;&#x0E31;&#x0E1A;</button><button id="confirmBtn" class="btn" type="button">&#x0E22;&#x0E37;&#x0E19;&#x0E22;&#x0E31;&#x0E19;&#x0E01;&#x0E32;&#x0E23;&#x0E2A;&#x0E31;&#x0E48;&#x0E07;&#x0E2A;&#x0E48;&#x0E07;</button></div></div>
 
 <script>
 const TH = {
@@ -75,7 +64,8 @@ const TH = {
   baht: '\u0E1A\u0E32\u0E17',
   calcFromSystem: '\u0E04\u0E33\u0E19\u0E27\u0E13\u0E08\u0E32\u0E01\u0E23\u0E30\u0E1A\u0E1A',
   cashOnlyReceiver: '\u0E1C\u0E39\u0E49\u0E23\u0E31\u0E1A\u0E0A\u0E33\u0E23\u0E30\u0E44\u0E14\u0E49\u0E40\u0E09\u0E1E\u0E32\u0E30\u0E40\u0E07\u0E34\u0E19\u0E2A\u0E14\u0E40\u0E17\u0E48\u0E32\u0E19\u0E31\u0E49\u0E19',
-  success: '\u0E1A\u0E31\u0E19\u0E17\u0E36\u0E01\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E2A\u0E48\u0E07\u0E2A\u0E33\u0E40\u0E23\u0E47\u0E08'
+  submitting: '\u0E01\u0E33\u0E25\u0E31\u0E07\u0E2A\u0E48\u0E07\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07...',
+  submitFailed: '\u0E2A\u0E48\u0E07\u0E04\u0E33\u0E2A\u0E31\u0E48\u0E07\u0E44\u0E21\u0E48\u0E2A\u0E33\u0E40\u0E23\u0E47\u0E08 \u0E01\u0E23\u0E38\u0E13\u0E32\u0E25\u0E2D\u0E07\u0E43\u0E2B\u0E21\u0E48\u0E2D\u0E35\u0E01\u0E04\u0E23\u0E31\u0E49\u0E07'
 };
 
 const sumSenderAddress = document.getElementById('sumSenderAddress');
@@ -94,16 +84,23 @@ const promoCodeField = document.getElementById('promoCode');
 
 function escapeHtml(value){
   return String(value || '...')
-    .replace(/&/g, '&amp;')
-    .replace(/</g, '&lt;')
-    .replace(/>/g, '&gt;')
-    .replace(/"/g, '&quot;')
-    .replace(/'/g, '&#39;');
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+    .replace(/\"/g, '&quot;').replace(/'/g, '&#39;');
 }
 
-let step1 = {};
-let step2 = {};
-let step3 = {};
+function normalizeBaseUrl(value){ return String(value || '').trim().replace(/\/$/, ''); }
+
+function resolveBackendUrl(){
+  const params = new URLSearchParams(window.location.search);
+  const fromQuery = normalizeBaseUrl(params.get('backend'));
+  if(fromQuery){ localStorage.setItem('bgo_backend_url', fromQuery); return fromQuery; }
+  const fromStorage = normalizeBaseUrl(localStorage.getItem('bgo_backend_url'));
+  if(fromStorage) return fromStorage;
+  const fallback = 'https://baetong-delivery-api.vercel.app';
+  return normalizeBaseUrl(fallback);
+}
+
+let step1 = {}; let step2 = {}; let step3 = {};
 
 function loadSteps(){
   try{ step1 = JSON.parse(localStorage.getItem('parcel_step1') || '{}'); }catch(e){ step1 = {}; }
@@ -113,22 +110,13 @@ function loadSteps(){
   const hasStep1 = !!((step1.pickupAddress || '').trim() && (step1.dropoffAddress || '').trim());
   const hasStep2 = !!((step2.senderName || '').trim() && (step2.senderPhone || '').trim() && (step2.receiverName || '').trim() && (step2.receiverPhone || '').trim());
 
-  if(!hasStep1){
-    window.location.href = 'index.html';
-    return false;
-  }
-  if(!hasStep2){
-    window.location.href = 'pacel2.html';
-    return false;
-  }
-
+  if(!hasStep1){ window.location.href = 'index.html'; return false; }
+  if(!hasStep2){ window.location.href = 'pacel2.html'; return false; }
   return true;
 }
 
 function loadSummary(){
-  if(!loadSteps()){
-    return;
-  }
+  if(!loadSteps()) return;
 
   sumSenderAddress.innerHTML = escapeHtml(step1.pickupAddress || step2.senderAddress);
   sumReceiverAddress.innerHTML = escapeHtml(step1.dropoffAddress || step2.receiverAddress);
@@ -144,16 +132,13 @@ function loadSummary(){
   if(step3.promo_code) promoCodeField.value = step3.promo_code;
 }
 
-backBtn.addEventListener('click', () => {
-  window.location.href = 'pacel2.html';
-});
+backBtn.addEventListener('click', () => { window.location.href = 'pacel2.html'; });
 
-confirmBtn.addEventListener('click', () => {
-  if(!loadSteps()){
-    return;
-  }
+confirmBtn.addEventListener('click', async () => {
+  if(!loadSteps()) return;
 
   const payment_method = paymentMethodField.value;
+  const payment_method_api = payment_method === 'cash' ? 'cod' : payment_method;
   const payer = payerField.value;
   const promo_code = promoCodeField.value.trim();
 
@@ -164,34 +149,78 @@ confirmBtn.addEventListener('click', () => {
 
   localStorage.setItem('parcel_step3', JSON.stringify({ payment_method, payer, promo_code }));
 
-  localStorage.setItem('parcel_last_submission', JSON.stringify({
-    service_type: 'parcel',
-    pickup_address: step1.pickupAddress || step2.senderAddress || '',
-    dropoff_address: step1.dropoffAddress || step2.receiverAddress || '',
-    distance_km: step1.distanceKm || 0,
-    delivery_fee: step1.priceEstimate || 0,
-    pickup_note: step1.pickupNote || '',
-    dropoff_note: step1.dropoffNote || '',
+  const payload = {
+    customer_line_user_id: '',
     sender_name: step2.senderName || '',
     sender_phone: step2.senderPhone || '',
     sender_note: step2.senderNote || '',
+    pickup_address: step1.pickupAddress || step2.senderAddress || '',
+    pickup_note: step1.pickupNote || '',
+    pickup_lat: Number(step1.pickupLat || 0),
+    pickup_lng: Number(step1.pickupLng || 0),
     receiver_name: step2.receiverName || '',
     receiver_phone: step2.receiverPhone || '',
     receiver_note: step2.receiverNote || '',
-    parcel_type: step2.parcelType || '',
-    parcel_weight: step2.parcelWeight || '',
-    payment_method,
-    payer,
-    promo_code,
-    submitted_at: new Date().toISOString(),
-    created_from: 'parcel-prototype'
-  }));
+    dropoff_address: step1.dropoffAddress || step2.receiverAddress || '',
+    dropoff_note: step1.dropoffNote || '',
+    dropoff_lat: Number(step1.dropoffLat || 0),
+    dropoff_lng: Number(step1.dropoffLng || 0),
+    distance_km: Number(step1.distanceKm || 0),
+    estimated_fee: Number(step1.priceEstimate || 0),
+    final_fee: Number(step1.priceEstimate || 0),
+    parcel_note: `${step2.parcelType || ''} | ${step2.parcelWeight || ''}`.trim(),
+    payment_method: payment_method_api
+  };
 
-  alert(TH.success);
-  localStorage.removeItem('parcel_step1');
-  localStorage.removeItem('parcel_step2');
-  localStorage.removeItem('parcel_step3');
-  window.location.href = 'index.html';
+  confirmBtn.disabled = true;
+  const originalText = confirmBtn.textContent;
+  confirmBtn.textContent = TH.submitting;
+
+  try {
+    const backendUrl = resolveBackendUrl();
+    const res = await fetch(`${backendUrl}/parcel/orders`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+
+    const json = await res.json();
+    if(!res.ok || !json?.success){ throw new Error(json?.error || json?.message || 'submit_failed'); }
+
+    localStorage.setItem('parcel_last_submission', JSON.stringify({
+      service_type: 'parcel',
+      order_code: json?.data?.order_code || '-',
+      status: 'new',
+      pickup_address: payload.pickup_address,
+      dropoff_address: payload.dropoff_address,
+      distance_km: payload.distance_km,
+      delivery_fee: payload.estimated_fee,
+      pickup_note: payload.pickup_note,
+      dropoff_note: payload.dropoff_note,
+      sender_name: payload.sender_name,
+      sender_phone: payload.sender_phone,
+      sender_note: payload.sender_note,
+      receiver_name: payload.receiver_name,
+      receiver_phone: payload.receiver_phone,
+      receiver_note: payload.receiver_note,
+      parcel_type: step2.parcelType || '',
+      parcel_weight: step2.parcelWeight || '',
+      payment_method: payment_method_api,
+      payer,
+      promo_code,
+      submitted_at: new Date().toISOString(),
+      created_from: 'parcel-api'
+    }));
+
+    localStorage.removeItem('parcel_step1');
+    localStorage.removeItem('parcel_step2');
+    localStorage.removeItem('parcel_step3');
+    window.location.href = 'success.html';
+  } catch (error) {
+    alert(TH.submitFailed);
+    confirmBtn.disabled = false;
+    confirmBtn.textContent = originalText;
+  }
 });
 
 loadSummary();
